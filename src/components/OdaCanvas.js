@@ -179,4 +179,39 @@ function OdaCanvas({ aktiviteYap, statlar }) {
                     'ders':   { id:'ders',   isim:'Ders Calis',           sure:2, etkiler:{ akademik:15, enerji:-20, sosyal:-5  }, mesaj:'Masaya oturup ders calistın.' },
                     'uyu':    { id:'uyu',    isim:'Uyu',                  sure:8, etkiler:{ enerji:80,   saglik:10,  sosyal:-5  }, mesaj:'Iyi bir uyku cektin.'          },
                     'spor':   { id:'spor',   isim:'Spor Yap',             sure:1, etkiler:{ saglik:20,   enerji:-25, sosyal:5   }, mesaj:'Spor aleti kullandın.'         },
-                    'sosyal': { id:'sosyal', isim:'Arkadaslarla Takilma', sure:2, etkiler:{ sosyal:25
+                    'sosyal': { id:'sosyal', isim:'Arkadaslarla Takilma', sure:2, etkiler:{ sosyal:25,   enerji:-10, akademik:-5}, mesaj:'Telefondan arkadaslarınla konustun.' },
+                };
+
+                if (aktiviteMap[yakin.aktiviteId]) {
+                    aktiviteYap(aktiviteMap[yakin.aktiviteId]);
+                }
+            }
+        };
+        window.addEventListener('keydown', eBasildi);
+
+        ciz();
+
+        return () => {
+            cancelAnimationFrame(animFrame);
+            window.removeEventListener('keydown', tusBasildi);
+            window.removeEventListener('keyup', tusBirakti);
+            window.removeEventListener('keydown', eBasildi);
+        };
+    }, [aktiviteYap]);
+
+    return (
+        <canvas
+            ref={canvasRef}
+            width={400}
+            height={320}
+            style={{
+                borderRadius: '12px',
+                border: '2px solid rgba(255,255,255,0.1)',
+                display: 'block',
+                width: '100%'
+            }}
+        />
+    );
+}
+
+export default OdaCanvas;
