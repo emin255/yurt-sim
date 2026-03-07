@@ -3,7 +3,7 @@ import Saat from './components/Saat';
 import Aktiviteler from './components/Aktiviteler';
 import OlayModal from './components/OlayModal';
 import { useOyun } from './hooks/useOyun';
-
+import OdaCanvas from './components/OdaCanvas';
 function App() {
     const { statlar, saat, gun, mesaj, aktiviteYap, mevcutOlay, olaySecimi } = useOyun();
 
@@ -37,7 +37,7 @@ function App() {
                 </div>
 
                 <Saat saat={saat} gun={gun} />
-
+                <OdaCanvas aktiviteYap={aktiviteYap} statlar={statlar} />
                 <div style={{
                     background: 'rgba(255,255,255,0.04)',
                     border: '1px solid rgba(255,255,255,0.08)',
