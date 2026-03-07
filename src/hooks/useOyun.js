@@ -44,7 +44,7 @@ const OLAYLAR = [
         secenekler: [
             {
                 yazi: 'Basvur',
-                etkiler: { para: 500, akademik: 5 },
+                etkiler: { para: 500},
                 sonuc: 'Bursu kazandin! 500 TL hesabina gecti.'
             },
             {
@@ -186,27 +186,33 @@ export function useOyun() {
 
                 if (tamamlandi) {
                     degisti = true;
-                    // Ödülü ver
-                    setStatlar(s => {
-                        const yeniStatlar = { ...s };
-                        for (let stat in gorev.odul) {
-                            if (stat === 'para') {
-                                yeniStatlar.para += gorev.odul.para;
-                            } else {
-                                yeniStatlar[stat] = Math.min(100, s[stat] + gorev.odul[stat]);
-                            }
-                        }
-                        return yeniStatlar;
-                    });
-                    setMesaj(`Gorev tamamlandi: ${gorev.isim}!`);
                     return { ...gorev, tamamlandi: true };
                 }
                 return gorev;
             });
+
+            if (degisti) {
+                // Ödülleri ayrı ver
+                yeni.forEach((gorev, i) => {
+                    if (gorev.tamamlandi && !onceki[i].tamamlandi) {
+                        setTimeout(() => {
+                            setStatlar(s => {
+                                const yeniS = { ...s };
+                                for (let stat in gorev.odul) {
+                                    if (stat === 'para') yeniS.para += gorev.odul.para;
+                                    else yeniS[stat] = Math.min(100, s[stat] + gorev.odul[stat]);
+                                }
+                                return yeniS;
+                            });
+                            setMesaj(`Gorev tamamlandi: ${gorev.isim}!`);
+                        }, 100);
+                    }
+                });
+            }
+
             return degisti ? yeni : onceki;
         });
-    }, [statlar]);
-
+    }, [statlar.akademik, statlar.saglik, statlar.sosyal, statlar.enerji, statlar.para]);
     // Yeni gün — görevleri yenile
     useEffect(() => {
         setGunlukGorevler(rastgeleGorevler());
@@ -247,10 +253,10 @@ export function useOyun() {
             return yeni;
         });
 
-        setMesaj(secenek.sonuc);
-        setMevcutOlay(null);
-        setCalisiyor(true); // Saati tekrar başlat
-    }
+    setMesaj(secenek.sonuc);
+    setMevcutOlay(null);
+    setCalisiyor(true);
+}
 
     // Aktivite yap
     function aktiviteYap(aktivite) {

@@ -4,9 +4,10 @@ import Aktiviteler from './components/Aktiviteler';
 import OlayModal from './components/OlayModal';
 import { useOyun } from './hooks/useOyun';
 import OdaCanvas from './components/OdaCanvas';
+import GunlukGorevler from './components/GunlukGorevler';
 function App() {
-    const { statlar, saat, gun, mesaj, aktiviteYap, mevcutOlay, olaySecimi } = useOyun();
-
+    const { statlar, saat, gun, mesaj, aktiviteYap, mevcutOlay, olaySecimi,gunlukGorevler } = useOyun();
+    
     return (
         <div style={{
             minHeight: '100vh',
@@ -38,6 +39,7 @@ function App() {
 
                 <Saat saat={saat} gun={gun} />
                 <OdaCanvas aktiviteYap={aktiviteYap} statlar={statlar} />
+                
                 <div style={{
                     background: 'rgba(255,255,255,0.04)',
                     border: '1px solid rgba(255,255,255,0.08)',
@@ -96,6 +98,7 @@ function App() {
                 }}>
                     <Aktiviteler aktiviteYap={aktiviteYap} />
                 </div>
+                <GunlukGorevler gorevler={gunlukGorevler} />
             </div>
         </div>
     );
