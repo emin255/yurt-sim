@@ -110,13 +110,31 @@ const OLAYLAR = [
     }
 ];
 
+const GUNLUK_GOREVLER = [
+    { id: 'g1', isim: 'Bugun ders calis',        hedef: 'akademik', miktar: 10, odul: { para: 50  }, aciklama: 'Akademik statini 10 artir' },
+    { id: 'g2', isim: 'Spor yap',                hedef: 'saglik',   miktar: 15, odul: { enerji: 20 }, aciklama: 'Saglik statini 15 artir'  },
+    { id: 'g3', isim: 'Arkadaslarinla vakit gec', hedef: 'sosyal',   miktar: 20, odul: { para: 30  }, aciklama: 'Sosyal statini 20 artir'  },
+    { id: 'g4', isim: 'Para kazan',               hedef: 'para',     miktar: 100,odul: { enerji: 30 }, aciklama: '100 TL kazan'            },
+    { id: 'g5', isim: 'Enerjini koru',            hedef: 'enerji',   miktar: 80, odul: { para: 40  }, aciklama: 'Enerjiyi 80in ustunde tut' },
+    { id: 'g6', isim: 'Saglikli kal',             hedef: 'saglik',   miktar: 70, odul: { para: 60  }, aciklama: 'Sagligi 70in ustunde tut' },
+    { id: 'g7', isim: 'Cok calis',                hedef: 'akademik', miktar: 80, odul: { para: 100 }, aciklama: 'Akademigi 80in ustunde tut'},
+    { id: 'g8', isim: 'Sosyal ol',                hedef: 'sosyal',   miktar: 75, odul: { sosyal: 10 }, aciklama: 'Sosyali 75in ustunde tut' },
+];
+
+function rastgeleGorevler() {
+    const karisik = [...GUNLUK_GOREVLER].sort(() => Math.random() - 0.5);
+    return karisik.slice(0, 3).map(g => ({ ...g, tamamlandi: false, baslangic: null }));
+}
+
 export function useOyun() {
     const [statlar, setStatlar] = useState(BASLANGIC_STATLARI);
     const [saat, setSaat] = useState(8);
     const [gun, setGun] = useState(1);
     const [calisiyor, setCalisiyor] = useState(true);
     const [mesaj, setMesaj] = useState('Güne başlıyorsun...');
-    const [mevcutOlay, setMevcutOlay] = useState(null); // Aktif olay
+    const [mevcutOlay, setMevcutOlay] = useState(null); 
+    const [gunlukGorevler, setGunlukGorevler] = useState(rastgeleGorevler);
+    const [tamamlananGorevler, setTamamlananGorevler] = useState([]);
 
     // Gerçek zamanlı saat
     useEffect(() => {
@@ -151,6 +169,49 @@ export function useOyun() {
 
         return () => clearInterval(interval);
     }, [calisiyor, mevcutOlay, gun]);
+
+    // Görev takibi — stat değişince kontrol et
+    useEffect(() => {
+        setGunlukGorevler(onceki => {
+            let degisti = false;
+            const yeni = onceki.map(gorev => {
+                if (gorev.tamamlandi) return gorev;
+
+                let tamamlandi = false;
+                if (gorev.hedef === 'para') {
+                    tamamlandi = statlar.para >= gorev.miktar;
+                } else {
+                    tamamlandi = statlar[gorev.hedef] >= gorev.miktar;
+                }
+
+                if (tamamlandi) {
+                    degisti = true;
+                    // Ödülü ver
+                    setStatlar(s => {
+                        const yeniStatlar = { ...s };
+                        for (let stat in gorev.odul) {
+                            if (stat === 'para') {
+                                yeniStatlar.para += gorev.odul.para;
+                            } else {
+                                yeniStatlar[stat] = Math.min(100, s[stat] + gorev.odul[stat]);
+                            }
+                        }
+                        return yeniStatlar;
+                    });
+                    setMesaj(`Gorev tamamlandi: ${gorev.isim}!`);
+                    return { ...gorev, tamamlandi: true };
+                }
+                return gorev;
+            });
+            return degisti ? yeni : onceki;
+        });
+    }, [statlar]);
+
+    // Yeni gün — görevleri yenile
+    useEffect(() => {
+        setGunlukGorevler(rastgeleGorevler());
+        setTamamlananGorevler([]);
+    }, [gun]);
 
     // Olay tetikleme
     function olayKontrol(mevcutStatlar) {
@@ -226,6 +287,7 @@ export function useOyun() {
         mesaj,
         aktiviteYap,
         mevcutOlay,
-        olaySecimi
+        olaySecimi,
+        gunlukGorevler
     };
 }
