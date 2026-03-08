@@ -39,7 +39,7 @@ const OLAYLAR = [
     {
         id: 'burs',
         baslik: 'Burs Firsati!',
-        mesaj: 'Akademik basarindan dolayi burs basvurusu yapabilirsin.',
+        mesaj: 'Akademik basarindan dolayi burs basvurusu yapab ilirsin.',
         kosul: (statlar) => statlar.akademik >= 75,
         secenekler: [
             {
@@ -127,6 +127,8 @@ function rastgeleGorevler() {
 }
 
 export function useOyun() {
+    const [donem, setDonem] = useState(1);
+    const [donemSonu, setDonemSonu] = useState(false);
     const [statlar, setStatlar] = useState(BASLANGIC_STATLARI);
     const [saat, setSaat] = useState(8);
     const [gun, setGun] = useState(1);
@@ -135,6 +137,16 @@ export function useOyun() {
     const [mevcutOlay, setMevcutOlay] = useState(null); 
     const [gunlukGorevler, setGunlukGorevler] = useState(rastgeleGorevler);
     const [tamamlananGorevler, setTamamlananGorevler] = useState([]);
+
+    useEffect(() => {
+        setGunlukGorevler(rastgeleGorevler());
+
+        // 30 günde bir dönem sonu
+        if (gun > 1 && gun % 30 === 1) {
+            setCalisiyor(false);
+            setDonemSonu(true);
+        }
+    }, [gun]);
 
     // Gerçek zamanlı saat
     useEffect(() => {
@@ -294,6 +306,29 @@ export function useOyun() {
         aktiviteYap,
         mevcutOlay,
         olaySecimi,
-        gunlukGorevler
+        gunlukGorevler,
+        donem,
+        donemSonu,
+        devamEt: (sonuclar) => {
+            // Burs varsa para ekle
+            if (sonuclar.bursFirsati) {
+                setStatlar(s => ({ ...s, para: s.para + 300 }));
+            }
+            // Statları dönem başına sıfırla (kısmen)
+            setStatlar(s => ({
+                ...s,
+                akademik: Math.max(30, s.akademik - 20),
+                enerji: 80,
+                sosyal: sonuclar.arkadasKaybetti
+                    ? Math.max(0, s.sosyal - 15)
+                    : sonuclar.arkadasKazandi
+                    ? Math.min(100, s.sosyal + 10)
+                    : s.sosyal
+            }));
+            setDonem(d => d + 1);
+            setDonemSonu(false);
+            setCalisiyor(true);
+            setMesaj(`${donem + 1}. doneme hosgeldin!`);
+        }
     };
 }

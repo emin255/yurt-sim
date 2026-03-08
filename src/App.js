@@ -5,8 +5,9 @@ import OlayModal from './components/OlayModal';
 import { useOyun } from './hooks/useOyun';
 import OdaCanvas from './components/OdaCanvas';
 import GunlukGorevler from './components/GunlukGorevler';
+import DonemSonuModal from './components/DonemSonuModal';
 function App() {
-    const { statlar, saat, gun, mesaj, aktiviteYap, mevcutOlay, olaySecimi,gunlukGorevler } = useOyun();
+    const { statlar, saat, gun, mesaj, aktiviteYap, mevcutOlay, olaySecimi,gunlukGorevler,donem, donemSonu, devamEt } = useOyun();
     
     return (
         <div style={{
@@ -17,7 +18,12 @@ function App() {
         }}>
             {/* OLAY MODALI */}
             <OlayModal olay={mevcutOlay} olaySecimi={olaySecimi} />
-
+            <DonemSonuModal
+                donemSonu={donemSonu}
+                statlar={statlar}
+                donem={donem}
+                devamEt={devamEt}
+            />
             <div style={{
                 width: '100%',
                 maxWidth: '460px',
