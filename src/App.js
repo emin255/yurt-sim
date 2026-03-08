@@ -10,104 +10,113 @@ function App() {
     const { statlar, saat, gun, mesaj, aktiviteYap, mevcutOlay, olaySecimi,gunlukGorevler,donem, donemSonu, devamEt } = useOyun();
     
     return (
+    <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '24px 16px',
+        fontFamily: "'Inter', sans-serif"
+    }}>
+        <OlayModal olay={mevcutOlay} olaySecimi={olaySecimi} />
+        <DonemSonuModal
+            donemSonu={donemSonu}
+            statlar={statlar}
+            donem={donem}
+            devamEt={devamEt}
+        />
+
         <div style={{
-            minHeight: '100vh',
+            width: '100%',
+            maxWidth: '480px',
             display: 'flex',
-            justifyContent: 'center',
-            padding: '24px 16px'
+            flexDirection: 'column',
+            gap: '12px'
         }}>
-            {/* OLAY MODALI */}
-            <OlayModal olay={mevcutOlay} olaySecimi={olaySecimi} />
-            <DonemSonuModal
-                donemSonu={donemSonu}
-                statlar={statlar}
-                donem={donem}
-                devamEt={devamEt}
-            />
-            <div style={{
-                width: '100%',
-                maxWidth: '460px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '16px'
-            }}>
-                <div style={{ textAlign: 'center' }}>
-                    <h1 style={{
-                        fontSize: '28px',
-                        color: '#ffd700',
-                        textShadow: '0 0 20px rgba(255,215,0,0.4)',
-                        letterSpacing: '2px'
-                    }}>
-                        YURT HAYATI
-                    </h1>
-                    <p style={{ color: '#888', fontSize: '13px' }}>{gun}. Gün</p>
-                </div>
-
-                <Saat saat={saat} gun={gun} />
-                <OdaCanvas aktiviteYap={aktiviteYap} statlar={statlar} />
-                
-                <div style={{
-                    background: 'rgba(255,255,255,0.04)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    padding: '20px',
-                    borderRadius: '16px'
+            {/* BAŞLIK */}
+            <div style={{ textAlign: 'center', padding: '8px 0' }}>
+                <h1 style={{
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: '16px',
+                    color: '#f0c040',
+                    textShadow: '0 0 30px rgba(240,192,64,0.5)',
+                    letterSpacing: '2px',
+                    lineHeight: '1.6'
                 }}>
-                    <h3 style={{
-                        color: '#aaa',
-                        fontSize: '12px',
-                        letterSpacing: '2px',
-                        marginBottom: '16px',
-                        textTransform: 'uppercase'
-                    }}>
-                        Durum
-                    </h3>
-                    <StatBar isim="Akademik" deger={statlar.akademik} renk="#4CAF50" />
-                    <StatBar isim="Saglik"   deger={statlar.saglik}   renk="#2196F3" />
-                    <StatBar isim="Sosyal"   deger={statlar.sosyal}   renk="#ff9800" />
-                    <StatBar isim="Enerji"   deger={statlar.enerji}   renk="#9C27B0" />
-                    <div style={{
-                        marginTop: '16px',
-                        padding: '10px 14px',
-                        background: 'rgba(255,215,0,0.08)',
-                        border: '1px solid rgba(255,215,0,0.2)',
-                        borderRadius: '8px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                    }}>
-                        <span style={{ color: '#aaa', fontSize: '13px' }}>Para</span>
-                        <span style={{ color: '#ffd700', fontWeight: 'bold', fontSize: '18px' }}>
-                            {statlar.para} TL
-                        </span>
-                    </div>
-                </div>
-
-                {mesaj && (
-                    <div style={{
-                        background: 'rgba(255,215,0,0.06)',
-                        border: '1px solid rgba(255,215,0,0.25)',
-                        padding: '12px 16px',
-                        borderRadius: '10px',
-                        fontSize: '14px',
-                        color: '#ffd700',
-                        lineHeight: '1.5'
-                    }}>
-                        {mesaj}
-                    </div>
-                )}
-
-                <div style={{
-                    background: 'rgba(255,255,255,0.04)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    padding: '20px',
-                    borderRadius: '16px'
-                }}>
-                    <Aktiviteler aktiviteYap={aktiviteYap} />
-                </div>
-                <GunlukGorevler gorevler={gunlukGorevler} />
+                    YURT HAYATI
+                </h1>
             </div>
+
+            <Saat saat={saat} gun={gun} />
+            <OdaCanvas aktiviteYap={aktiviteYap} statlar={statlar} />
+
+            {/* STATLAR */}
+            <div style={{
+                background: '#0e0e1a',
+                border: '1px solid rgba(255,255,255,0.06)',
+                padding: '18px',
+                borderRadius: '16px'
+            }}>
+                <p style={{
+                    fontSize: '10px', color: '#444',
+                    letterSpacing: '2px', marginBottom: '14px',
+                    textTransform: 'uppercase', fontWeight: '600'
+                }}>Durum</p>
+                <StatBar isim="Akademik" deger={statlar.akademik} renk="#50c878" />
+                <StatBar isim="Saglik"   deger={statlar.saglik}   renk="#4da6ff" />
+                <StatBar isim="Sosyal"   deger={statlar.sosyal}   renk="#ff8c42" />
+                <StatBar isim="Enerji"   deger={statlar.enerji}   renk="#b57bee" />
+                <div style={{
+                    marginTop: '14px',
+                    padding: '10px 14px',
+                    background: 'rgba(240,192,64,0.06)',
+                    border: '1px solid rgba(240,192,64,0.15)',
+                    borderRadius: '10px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}>
+                    <span style={{ fontSize: '11px', color: '#666', letterSpacing: '1px' }}>PARA</span>
+                    <span style={{
+                        fontFamily: "'Press Start 2P', monospace",
+                        fontSize: '13px',
+                        color: '#f0c040'
+                    }}>
+                        {statlar.para} TL
+                    </span>
+                </div>
+            </div>
+
+            {/* MESAJ */}
+            {mesaj && (
+                <div style={{
+                    background: 'rgba(240,192,64,0.05)',
+                    border: '1px solid rgba(240,192,64,0.2)',
+                    padding: '12px 16px',
+                    borderRadius: '10px',
+                    fontSize: '13px',
+                    color: '#f0c040',
+                    lineHeight: '1.6',
+                    animation: 'fade-in 0.3s ease'
+                }}>
+                    {mesaj}
+                </div>
+            )}
+
+            {/* AKTİVİTELER */}
+            <div style={{
+                background: '#0e0e1a',
+                border: '1px solid rgba(255,255,255,0.06)',
+                padding: '18px',
+                borderRadius: '16px'
+            }}>
+                <Aktiviteler aktiviteYap={aktiviteYap} />
+            </div>
+
+            {/* GÜNLÜK GÖREVLER */}
+            <GunlukGorevler gorevler={gunlukGorevler} />
         </div>
-    );
+    </div>
+);
 }
 
 export default App;

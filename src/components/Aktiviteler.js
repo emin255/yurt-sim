@@ -1,105 +1,58 @@
 const AKTIVITELER = [
-    {
-        id: 'ders',
-        isim: 'Ders Calis',
-        ikon: 'D',
-        sure: 2,
-        etkiler: { akademik: 15, enerji: -20, sosyal: -5 },
-        mesaj: 'Kitaplara gomuldun, akademik becerin artti.',
-        renk: '#4CAF50'
-    },
-    {
-        id: 'spor',
-        isim: 'Spor Yap',
-        ikon: 'S',
-        sure: 1,
-        etkiler: { saglik: 20, enerji: -25, sosyal: 5 },
-        mesaj: 'Salonda ter doktunn, kendini iyi hissediyorsun.',
-        renk: '#2196F3'
-    },
-    {
-        id: 'sosyal',
-        isim: 'Arkadaslarla Takilma',
-        ikon: 'A',
-        sure: 2,
-        etkiler: { sosyal: 25, enerji: -10, akademik: -5 },
-        mesaj: 'Guzel vakit gecirdin, moralin yukseldi.',
-        renk: '#ff9800'
-    },
-    {
-        id: 'is',
-        isim: 'Part-time Is',
-        ikon: 'P',
-        sure: 3,
-        etkiler: { para: 150, enerji: -30, sosyal: -10 },
-        mesaj: 'Calistin, biraz para kazandin.',
-        renk: '#9C27B0'
-    },
-    {
-        id: 'uyu',
-        isim: 'Uyu',
-        ikon: 'U',
-        sure: 8,
-        etkiler: { enerji: 80, saglik: 10, sosyal: -5 },
-        mesaj: 'Iyi bir uyku cektin, enerjin doldu.',
-        renk: '#607D8B'
-    }
+    { id:'ders',   isim:'Ders Calis',          ikon:'📚', sure:2, etkiler:{ akademik:15, enerji:-20, sosyal:-5  }, mesaj:'Kitaplara gomuldun.', renk:'#50c878' },
+    { id:'spor',   isim:'Spor Yap',             ikon:'💪', sure:1, etkiler:{ saglik:20,   enerji:-25, sosyal:5   }, mesaj:'Ter doktunn!',        renk:'#4da6ff' },
+    { id:'sosyal', isim:'Arkadaslarla Takilma', ikon:'👥', sure:2, etkiler:{ sosyal:25,   enerji:-10, akademik:-5}, mesaj:'Guzel vakit.',         renk:'#ff8c42' },
+    { id:'is',     isim:'Part-time Is',         ikon:'💼', sure:3, etkiler:{ para:150,    enerji:-30, sosyal:-10 }, mesaj:'Para kazandin.',       renk:'#b57bee' },
+    { id:'uyu',    isim:'Uyu',                  ikon:'😴', sure:8, etkiler:{ enerji:80,   saglik:10,  sosyal:-5  }, mesaj:'Dinlendın.',           renk:'#60a5fa' },
 ];
 
 function Aktiviteler({ aktiviteYap }) {
     return (
         <div>
-            <h3 style={{
-                color: '#aaa',
-                fontSize: '12px',
+            <p style={{
+                fontSize: '10px',
+                color: '#555',
                 letterSpacing: '2px',
-                marginBottom: '14px',
-                textTransform: 'uppercase'
+                textTransform: 'uppercase',
+                marginBottom: '12px',
+                fontWeight: '600'
             }}>
                 Aktiviteler
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {AKTIVITELER.map(aktivite => (
+            </p>
+            <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '8px'
+            }}>
+                {AKTIVITELER.map(a => (
                     <button
-                        key={aktivite.id}
-                        onClick={() => aktiviteYap(aktivite)}
+                        key={a.id}
+                        onClick={() => aktiviteYap(a)}
                         style={{
-                            padding: '12px 16px',
-                            background: `${aktivite.renk}22`,
-                            border: `1px solid ${aktivite.renk}55`,
+                            padding: '12px',
+                            background: `${a.renk}10`,
+                            border: `1px solid ${a.renk}30`,
+                            borderRadius: '12px',
                             color: 'white',
-                            borderRadius: '10px',
-                            cursor: 'pointer',
+                            textAlign: 'left',
                             display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            fontSize: '14px'
+                            flexDirection: 'column',
+                            gap: '6px'
                         }}
                     >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <div style={{
-                                width: '28px',
-                                height: '28px',
-                                background: aktivite.renk,
-                                borderRadius: '6px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: '12px',
-                                fontWeight: 'bold'
-                            }}>
-                                {aktivite.ikon}
-                            </div>
-                            <span>{aktivite.isim}</span>
-                        </div>
+                        <span style={{ fontSize: '20px' }}>{a.ikon}</span>
+                        <span style={{ fontSize: '11px', fontWeight: '600', color: a.renk }}>
+                            {a.isim}
+                        </span>
                         <span style={{
-                            fontSize: '12px',
-                            color: '#888',
-                            background: 'rgba(255,255,255,0.06)',
-                            padding: '3px 8px',
-                            borderRadius: '4px'
+                            fontSize: '10px',
+                            color: '#555',
+                            background: 'rgba(255,255,255,0.04)',
+                            padding: '2px 6px',
+                            borderRadius: '4px',
+                            alignSelf: 'flex-start'
                         }}>
-                            {aktivite.sure}s
+                            {a.sure}s
                         </span>
                     </button>
                 ))}
