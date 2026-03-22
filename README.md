@@ -1,71 +1,60 @@
-# Getting Started with Create React App
+# Yurt Sim (Dormitory Simulation)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Yurt Sim, üniversite yurt hayatını deneyimleyebileceğiniz web tabanlı, etkileşimli bir simülasyon ve rol yapma (RPG) oyunudur. Karakterinizi özelleştirin, günlük rutinlerinizi yönetin, mini oyunlar oynayın ve diğer öğrencilerle (NPC'ler) etkileşime girerek üniversite yıllarınızı en iyi şekilde geçirmeye çalışın!
 
-## Available Scripts
+## 🌟 Özellikler
 
-In the project directory, you can run:
+* **Kapsamlı Karakter Yönetimi:** Akademik başarı, sağlık, sosyal hayat ve enerji seviyelerinizi dengede tutmaya çalışın. Unutmayın, paranızı da idareli harcamalısınız!
+* **Etkileşimli NPC Sistemi:** Yurdun çeşitli alanlarında dolaşan diğer öğrencilerle gelişmiş, çoktan seçmeli diyaloglara girin.
+* **Geniş Oyun Dünyası:** Koridor, Ortak Alan, Bahçe, Kafeterya, Kütüphane ve Spor Sahası gibi farklı mekanları keşfedin.
+* **Mini Oyunlar:** Garsonluk gibi mini-oyunlarla para kazanın veya eğlenceli vakit geçirin.
+* **Karakter Özelleştirme:** Karakterinizin saç tipini ve görünümünü kendi zevkinize göre ayarlayın.
+* **Zaman ve Dönem İlerlemesi:** Günlük görevleri tamamlayın, rastgele gelişen olaylara (Olay Modalları) tepki verin ve dönem sonlarında genel durumunuzu değerlendirin.
+* **Sürükleyici Görsel Efektler:** Uyuma gibi eylemlerde ekran kararma (fade transition) efektleriyle desteklenen atmosferik oyun deneyimi.
 
-### `npm start`
+## 🛠️ Teknolojiler
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Bu proje [Create React App](https://github.com/facebook/create-react-app) kullanılarak oluşturulmuştur.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* **Frontend:** React.js
+* **Oyun Motoru & Görüntüleme:** HTML5 Canvas API (`OdaCanvas.js` üzerinden)
+* **Durum Yönetimi (State Management):** React Hooks (Custom Hooks: `useOyun`, `useKarakter`)
+* **Stil:** CSS / Inline Styles (Modern, karanlık tema ağırlıklı tasarım)
 
-### `npm test`
+## 🚀 Kurulum ve Çalıştırma
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları izleyebilirsiniz:
 
-### `npm run build`
+1. **Bağımlılıkları Yükleyin:**
+   Proje dizininde terminali açın ve aşağıdaki komutu çalıştırarak gerekli paketleri indirin:
+   ```bash
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Geliştirme Sunucusunu Başlatın:**
+   Aşağıdaki komut ile oyunu geliştirme modunda çalıştırabilirsiniz:
+   ```bash
+   npm start
+   ```
+   Tarayıcınızda [http://localhost:3000](http://localhost:3000) adresi otomatik olarak açılacaktır. Sayfa, kodda yaptığınız değişikliklerle anında güncellenir.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Üretime (Production) Hazırlama:**
+   Projeyi canlıya almak veya derlemek isterseniz:
+   ```bash
+   npm run build
+   ```
+   Bu komut, uygulamayı `build` klasörüne en iyi performans için optimize edilmiş şekilde çıkarır.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🎮 Nasıl Oynanır?
 
-### `npm run eject`
+* **Hareket:** Klavye yön tuşları veya W/A/S/D ile karakterinizi hareket ettirin.
+* **Etkileşim:** Etkileşime girilebilecek nesnelerin (yatak, çalışma masası vb.) yeya karakterlerin (NPC) yakınına giderek **'E'** tuşuna basın.
+* **Arayüz:** Sol panelden mevcut saati, günü, statlarınızı (Akademik, Sağlık, Sosyal, Enerji), paranızı ve günlük görevlerinizi takip edebilirsiniz.
+* **Karakter Menüsü:** Sağ üst köşedeki "Karakter" butonuna tıklayarak karakterinizin fiziki özelliklerini değiştirebilirsiniz.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🤝 Katkıda Bulunma
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Eğer oyunu geliştirmek, yeni özellikler veya bölümler eklemek isterseniz PR (Pull Request) oluşturmaktan çekinmeyin!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# yurt-sim
+---
+*İyi eğlenceler ve zorlu öğrencilik hayatında başarılar!* 🎓
