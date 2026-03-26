@@ -64,6 +64,7 @@ export default function GarsonlukOyunu({ onBitis }) {
     const [bitti, setBitti] = useState(false);
     const [sonucPuan, setSonucPuan] = useState(0);
     const animRef = useRef(null);
+    const masaTimerRef = useRef([]);
 
     useEffect(() => {
         const s = stateRef.current;
@@ -155,6 +156,7 @@ export default function GarsonlukOyunu({ onBitis }) {
             window.removeEventListener('keydown', keyDown);
             window.removeEventListener('keyup', keyUp);
             window.removeEventListener('blur', blur);
+            masaTimerRef.current.forEach(clearTimeout);
         };
     }, []);
 
@@ -245,10 +247,10 @@ export default function GarsonlukOyunu({ onBitis }) {
                         setMesaj(s, bonus === 2 ? `⚡ Süper hızlı! +${bonus} puan!` : `✅ Teslim! +${bonus} puan!`);
                         setUi(u => ({ ...u, puan: s.puan, tepsi: [...s.tepsi] }));
                         // 4s sonra masa boşalsın
-                        setTimeout(() => {
+                        masaTimerRef.current.push(setTimeout(() => {
                             masa.durum = 'bos';
                             masa.siparis = null;
-                        }, 4000);
+                        }, 4000));
                         return;
                     } else {
                         setMesaj(s, `🍽 Önce mutfaktan ${masa.siparis} al!`);

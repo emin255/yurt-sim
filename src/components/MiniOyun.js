@@ -380,6 +380,9 @@ function KodlamaOyunu({ onBitis }) {
     const [sure, setSure] = useState(30);
     const [sonuc, setSonuc] = useState(null);
     const puanRef = useRef(0);
+    const yazilanRef = useRef('');
+    const aktifKelimelerRef = useRef([]);
+    const sonucRef = useRef(null);
 
     const kelimeUret = useCallback(() => {
         const kelime = kelimeler[Math.floor(Math.random() * kelimeler.length)];
@@ -425,16 +428,20 @@ function KodlamaOyunu({ onBitis }) {
         return () => clearInterval(t);
     }, [sonuc]);
 
-    const tusBas = (e) => {
-        if (sonuc) return;
+    useEffect(() => { yazilanRef.current = yazilan; }, [yazilan]);
+    useEffect(() => { aktifKelimelerRef.current = aktifKelimeler; }, [aktifKelimeler]);
+    useEffect(() => { sonucRef.current = sonuc; }, [sonuc]);
+
+    const tusBas = useCallback((e) => {
+        if (sonucRef.current) return;
         const harf = e.key.toLowerCase();
         if (harf.length !== 1 || !harf.match(/[a-z]/)) return;
-        
-        const yeniYazilan = yazilan + harf;
+
+        const yeniYazilan = yazilanRef.current + harf;
         setYazilan(yeniYazilan);
-        
+
         // Eşleşen var mı?
-        const eslesen = aktifKelimeler.find(k => k.metin === yeniYazilan);
+        const eslesen = aktifKelimelerRef.current.find(k => k.metin === yeniYazilan);
         if (eslesen) {
             setPuan(p => {
                 const yeniP = p + 5;
@@ -443,16 +450,16 @@ function KodlamaOyunu({ onBitis }) {
             });
             setAktifKelimeler(k => k.filter(x => x.id !== eslesen.id));
             setYazilan('');
-        } else if (aktifKelimeler.every(k => !k.metin.startsWith(yeniYazilan))) {
+        } else if (aktifKelimelerRef.current.every(k => !k.metin.startsWith(yeniYazilan))) {
             // Hiçbir şeyle uyuşmuyorsa sıfırla
             setYazilan('');
         }
-    };
+    }, []);
 
     useEffect(() => {
         window.addEventListener('keydown', tusBas);
         return () => window.removeEventListener('keydown', tusBas);
-    }, [yazilan, aktifKelimeler, sonuc]);
+    }, [tusBas]);
 
     return (
         <div style={{ textAlign: 'center', position: 'relative' }}>
@@ -513,6 +520,11 @@ function HafizaOyunu({ onBitis }) {
     const [eslesenler, setEslesenler] = useState([]);
     const [hamle, setHamle] = useState(0);
     const [sonuc, setSonuc] = useState(null);
+    const timeoutsRef = useRef([]);
+
+    useEffect(() => {
+        return () => timeoutsRef.current.forEach(clearTimeout);
+    }, []);
 
     useEffect(() => {
         const ciftler = [...emojiler, ...emojiler].sort(() => Math.random() - 0.5);
@@ -533,10 +545,10 @@ function HafizaOyunu({ onBitis }) {
                 setAcikKartlar([]);
                 if (yeniEslesenler.length === kartlar.length) {
                     // Oyun bitti
-                    setTimeout(() => setSonuc(hamle <= 15 ? 'basarili' : 'basarisiz'), 500);
+                    timeoutsRef.current.push(setTimeout(() => setSonuc(hamle <= 15 ? 'basarili' : 'basarisiz'), 500));
                 }
             } else {
-                setTimeout(() => setAcikKartlar([]), 800);
+                timeoutsRef.current.push(setTimeout(() => setAcikKartlar([]), 800));
             }
         }
     };
@@ -593,6 +605,7 @@ function TemizlikOyunu({ onBitis }) {
     const [puan, setPuan] = useState(0);
     const [sure, setSure] = useState(20);
     const [sonuc, setSonuc] = useState(null);
+    const puanRef = useRef(0);
 
     useEffect(() => {
         if (sonuc) return;
@@ -612,20 +625,22 @@ function TemizlikOyunu({ onBitis }) {
         if (sonuc) return;
         const t = setInterval(() => setSure(s => {
             if (s <= 1) {
-                setSonuc(puan >= 15 ? 'basarili' : 'basarisiz');
+                setSonuc(puanRef.current >= 15 ? 'basarili' : 'basarisiz');
                 return 0;
             }
             return s - 1;
         }), 1000);
         return () => clearInterval(t);
-    }, [sonuc, puan]);
+    }, [sonuc]);
 
     const tikla = (id) => {
         if (sonuc) return;
         setHedefler(h => h.filter(x => x.id !== id));
-        setPuan(p => p + 1);
-        
-        // Ekrana tıklama efekti çiz?
+        setPuan(p => {
+            const yeni = p + 1;
+            puanRef.current = yeni;
+            return yeni;
+        });
     };
 
     return (

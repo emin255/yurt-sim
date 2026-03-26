@@ -48,7 +48,7 @@ function OlayModal({ olay, olaySecimi }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     {olay.secenekler.map((secenek, i) => (
                         <button
-                            key={i}
+                            key={secenek.yazi}
                             onClick={() => olaySecimi(secenek)}
                             style={{
                                 padding: '14px 20px',

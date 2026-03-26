@@ -717,12 +717,12 @@ function konusmaBalonuCiz(ctx, cx, topY, tile, isim, nodeData, seciliIndex) {
     };
 
     // Maksimum genişliği sınırla
-    const maxW = tile * 7; 
-    
+    const maxW = tile * 7;
+
     // NPC'nin Mesajı
     ctx.font = `${fontSize}px Arial`;
     const mesajSatirlar = satirlara(nodeData.mesaj, maxW - pad.x * 2);
-    
+
     // Seçenekler (varsa)
     const seceneklerVarsa = nodeData.secenekler && nodeData.secenekler.length > 0;
     const secenekSatirlar = [];
@@ -748,14 +748,14 @@ function konusmaBalonuCiz(ctx, cx, topY, tile, isim, nodeData, seciliIndex) {
     // Toplam Genişlik ve Yükseklik
     const icerikW = Math.max(isimW, maxMesajW, maxSecenekW, tile * 3);
     const balonW = Math.min(icerikW + pad.x * 2, maxW + pad.x * 2);
-    
+
     const altYaziH = !seceneklerVarsa ? lineH : 0; // Kapat yazısı için
     let toplamSecenekSatir = 0;
     secenekSatirlar.forEach(s => toplamSecenekSatir += s.lines.length);
 
     const boslukOrtasi = seceneklerVarsa ? lineH * 0.5 : 0;
     const balonH = pad.y + lineH + 4 + (mesajSatirlar.length * lineH) + boslukOrtasi + (toplamSecenekSatir * lineH) + altYaziH + pad.y;
-    
+
     const balonX = cx - balonW / 2;
     const balonY = topY - (tile * 2) - balonH - tailH + tile * 0.5;
 
@@ -805,7 +805,7 @@ function konusmaBalonuCiz(ctx, cx, topY, tile, isim, nodeData, seciliIndex) {
     ctx.fillStyle = '#ffd700';
     ctx.textAlign = 'center';
     ctx.fillText(isim, cx, curY);
-    
+
     // Ayraç
     ctx.strokeStyle = 'rgba(255,215,0,0.3)';
     ctx.lineWidth = 1;
@@ -813,7 +813,7 @@ function konusmaBalonuCiz(ctx, cx, topY, tile, isim, nodeData, seciliIndex) {
     ctx.moveTo(balonX + pad.x, curY + 4);
     ctx.lineTo(balonX + balonW - pad.x, curY + 4);
     ctx.stroke();
-    
+
     curY += lineH + 2;
 
     // Mesaj
@@ -860,7 +860,7 @@ function shiftColor(hex, amount) {
 // ============================================================
 // ANA COMPONENT
 // ============================================================
-function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif = true, karakterAyarlari }) {
+function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif = true, karakterAyarlari, statlar }) {
     const canvasRef = useRef(null);
     const karakterRef = useRef({ x: 7 * TILE, y: 7 * TILE, yon: 'sag' });
     const tuslarRef = useRef({});
@@ -871,6 +871,30 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
     const npclerRef = useRef([]);
     const yakinNpcRef = useRef(null);
     const npcDiyalogRef = useRef(null); // { npcId, isim, dugumler, aktifDugumId, seciliIndex }
+    const aiMesajRef = useRef({});
+
+    async function aiMesajCek(npc) {
+        if (aiMesajRef.current[npc.id]) return; // zaten çekilmişse tekrar çekme
+        if (aiMesajRef.current[npc.id + '_loading']) return; // zaten çekiliyorsa tekrar çekme
+        aiMesajRef.current[npc.id + '_loading'] = true;
+
+        try {
+            const res = await fetch('http://localhost:3001/api/npc-dialog', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    npcTip: npc.npcTip,
+                    statlar: statlar,
+                    npcIsim: npc.isim
+                })
+            });
+            const data = await res.json();
+            aiMesajRef.current[npc.id] = data.mesaj;
+        } catch (e) {
+            console.error('AI mesaj hatası:', e);
+            aiMesajRef.current[npc.id + '_loading'] = false;
+        }
+    }
     const [mevcutOdaId, setMevcutOdaId] = useState('yurtOdasi');
 
 
@@ -959,6 +983,7 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
         };
         const eBasildi = e => {
             const diyalog = npcDiyalogRef.current;
+
             // Yön tuşlarıyla seçenek değiştirme
             if (diyalog) {
                 const nodeData = diyalog.dugumler[diyalog.aktifDugumId];
@@ -981,7 +1006,7 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
                 const nodeData = diyalog.dugumler[diyalog.aktifDugumId];
                 if (nodeData && nodeData.secenekler && nodeData.secenekler.length > 0) {
                     const secilen = nodeData.secenekler[diyalog.seciliIndex];
-                    
+
                     // Seçeneğin yan etkisi varsa (stat değiştirme) uygula
                     if (secilen && secilen.etkiler && ekleEtki) {
                         ekleEtki(secilen.etkiler, 'Diyalog Seçimi');
@@ -1007,11 +1032,24 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
 
             const yakin = yakinRef.current;
             const yakinNpc = yakinNpcRef.current;
+            if (yakinNpcRef.current) {
+                aiMesajCek(yakinNpcRef.current);
+            }
             if (yakinNpc) {
+                const aiMesaj = aiMesajRef.current[yakinNpc.id];
+                const dugumler = { ...yakinNpc.diyalogAgaci };
+
+                if (aiMesaj) {
+                    dugumler['giris'] = {
+                        ...dugumler['giris'],
+                        mesaj: aiMesaj
+                    };
+                }
+
                 npcDiyalogRef.current = {
                     npcId: yakinNpc.id,
                     isim: yakinNpc.isim,
-                    dugumler: yakinNpc.diyalogAgaci,
+                    dugumler: dugumler,
                     aktifDugumId: yakinNpc.ilkDugum,
                     seciliIndex: 0,
                 };
@@ -1034,7 +1072,9 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
             }
         };
         if (!aktif) {
-            return;
+            return () => {
+                window.removeEventListener('resize', onResize);
+            };
         }
         window.addEventListener('keydown', tusBasildi);
         window.addEventListener('keyup', tusBirakti);
@@ -1115,6 +1155,7 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
                 const dy = karMy - npcCy;
                 if (Math.sqrt(dx * dx + dy * dy) < dinamikTile * 2) {
                     yakinNpcRef.current = npc;
+                    aiMesajCek(npc);
                     break;
                 }
             }
@@ -1157,7 +1198,7 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
             if (npcDiyalogRef.current) {
                 const diyalogData = npcDiyalogRef.current;
                 const diyalogNpc = npclerRef.current.find(n => n.id === diyalogData.npcId);
-                
+
                 if (diyalogNpc) {
                     const aktifDugum = diyalogData.dugumler[diyalogData.aktifDugumId];
                     if (aktifDugum) {

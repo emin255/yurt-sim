@@ -415,7 +415,6 @@ export function useOyun() {
     };
 
     useEffect(() => {
-        setGunlukGorevler(rastgeleGorevler());
         // 30 günde bir dönem sonu
         if (gun > 1 && gun % 30 === 1) {
             setCalisiyor(false);

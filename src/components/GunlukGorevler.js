@@ -34,7 +34,7 @@ function GunlukGorevler({ gorevler }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {gorevler.map((gorev, i) => (
                     <div
-                        key={i}
+                        key={gorev.id}
                         style={{
                             padding: '10px 14px',
                             background: gorev.tamamlandi

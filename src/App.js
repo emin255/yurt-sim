@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import StatBar from './components/StatBar';
 import Saat from './components/Saat';
 import OlayModal from './components/OlayModal';
@@ -29,10 +29,14 @@ function App() {
         }
     };
 
+    const uykuTimerRef = useRef([]);
+
     const handleUyu = (saat) => {
         setUykuModaliAcik(false);
+        uykuTimerRef.current.forEach(clearTimeout);
+        uykuTimerRef.current = [];
         setEkranKarariyor(true);
-        
+
         const uykuAktivitesi = {
             id: 'uyu',
             sure: saat,
@@ -40,12 +44,10 @@ function App() {
             mesaj: `${saat} saat boyunca iyi bir uyku çektin.`
         };
 
-        setTimeout(() => {
-            aktiviteYap(uykuAktivitesi);
-        }, 1000); // Update stats when screen is fully black
-        setTimeout(() => {
-            setEkranKarariyor(false); // Fade back in
-        }, 2000);
+        uykuTimerRef.current.push(
+            setTimeout(() => aktiviteYap(uykuAktivitesi), 1000),
+            setTimeout(() => setEkranKarariyor(false), 2000)
+        );
     };
 
     return (
