@@ -13,7 +13,7 @@ import KarakterOzellistirme from './components/KarakterOzellistirme';
 import UykuSecimModal from './components/UykuSecimModal';
 
 function App() {
-    const { statlar, saat, gun, mesaj, aktiviteYap, mevcutOlay, olaySecimi, gunlukGorevler, donem, donemSonu, devamEt, statGuncelle, miniOyun, setMiniOyun } = useOyun();
+    const { statlar, saat, gun, mesaj, aktiviteYap, mevcutOlay, olaySecimi, gunlukGorevler, donem, donemSonu, devamEt, statGuncelle, miniOyun, setMiniOyun, npcKonustu, oyunBitti, oyunBitisNedeni } = useOyun();
     const [solPanelAcik, setSolPanelAcik] = useState(true);
 
     const { ayarlar, setAyarlar } = useKarakter();
@@ -21,12 +21,26 @@ function App() {
     const [ekranKarariyor, setEkranKarariyor] = useState(false);
     const [uykuModaliAcik, setUykuModaliAcik] = useState(false);
 
+    const [dersBekleyen, setDersBekleyen] = useState(null);
+
     const handleAktiviteYap = (aktivite) => {
         if (aktivite.id === 'uyu') {
             setUykuModaliAcik(true);
+        } else if (aktivite.id === 'ders') {
+            setDersBekleyen(aktivite);
+            setMiniOyun('dersCalisma');
         } else {
             aktiviteYap(aktivite);
         }
+    };
+
+    const handleDersBitis = (basarili) => {
+        if (basarili) {
+            aktiviteYap({ ...dersBekleyen, etkiler: { akademik: 15, enerji: -20, sosyal: -5 }, mesaj: 'Odaklanarak ders çalıştın! Akademik başarın arttı.' });
+        } else {
+            aktiviteYap({ ...dersBekleyen, etkiler: { enerji: -20 }, mesaj: 'Konsantre olamadın, sadece enerjin harcandı.' });
+        }
+        setDersBekleyen(null);
     };
 
     const uykuTimerRef = useRef([]);
@@ -50,6 +64,65 @@ function App() {
         );
     };
 
+    if (oyunBitti) {
+        return (
+            <div style={{
+                width: '100vw', height: '100vh',
+                background: '#0a0a0f',
+                display: 'flex', flexDirection: 'column',
+                alignItems: 'center', justifyContent: 'center',
+                fontFamily: "'Press Start 2P', monospace",
+                color: '#fff',
+                gap: '32px',
+            }}>
+                <div style={{ fontSize: '48px' }}>💀</div>
+                <h1 style={{
+                    fontSize: '28px',
+                    color: '#e74c3c',
+                    textShadow: '0 0 20px #e74c3c',
+                    letterSpacing: '4px',
+                    margin: 0,
+                }}>
+                    OYUN BİTTİ
+                </h1>
+                <p style={{
+                    fontSize: '11px',
+                    color: '#aaa',
+                    textAlign: 'center',
+                    maxWidth: '400px',
+                    lineHeight: '2',
+                    margin: 0,
+                }}>
+                    {oyunBitisNedeni}
+                </p>
+                <div style={{
+                    fontSize: '10px',
+                    color: '#666',
+                    textAlign: 'center',
+                    lineHeight: '2',
+                }}>
+                    <div>{donem}. dönem • {gun}. gün</div>
+                </div>
+                <button
+                    onClick={() => window.location.reload()}
+                    style={{
+                        marginTop: '8px',
+                        padding: '14px 32px',
+                        background: '#e74c3c',
+                        border: 'none',
+                        color: '#fff',
+                        fontFamily: "'Press Start 2P', monospace",
+                        fontSize: '11px',
+                        cursor: 'pointer',
+                        letterSpacing: '2px',
+                    }}
+                >
+                    YENİDEN BAŞLA
+                </button>
+            </div>
+        );
+    }
+
     return (
         <div style={{
             width: '100vw',
@@ -68,7 +141,7 @@ function App() {
                 top: 0,
                 left: 0,
             }}>
-                <OdaCanvas aktiviteYap={handleAktiviteYap} statlar={statlar} ekleEtki={statGuncelle} aktif={!miniOyun && !ozellistirmeAcik && !ekranKarariyor} karakterAyarlari={ayarlar} />
+                <OdaCanvas aktiviteYap={handleAktiviteYap} statlar={statlar} ekleEtki={statGuncelle} aktif={!miniOyun && !ozellistirmeAcik && !ekranKarariyor} karakterAyarlari={ayarlar} onNpcKonustu={npcKonustu} />
             </div>
 
             {/* MODALLER */}
@@ -77,8 +150,9 @@ function App() {
             {miniOyun && (
                 <MiniOyun
                     tip={miniOyun}
-                    onKapat={() => setMiniOyun(null)}
+                    onKapat={() => { setMiniOyun(null); setDersBekleyen(null); }}
                     onStatGuncelle={statGuncelle}
+                    onBitisCallback={dersBekleyen ? handleDersBitis : undefined}
                 />
             )}
 

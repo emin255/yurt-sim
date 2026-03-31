@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const BASLANGIC_STATLARI = {
-    akademik: 50,
-    saglik: 70,
-    sosyal: 60,
-    enerji: 100,
-    para: 500
+    akademik: 40,
+    saglik: 60,
+    sosyal: 50,
+    enerji: 90,
+    para: 300
 };
 
 const SAATLIK_DUSUS = {
-    enerji: -2,
-    sosyal: -1,
+    enerji: -3,
+    sosyal: -2,
+    akademik: -1,
     saglik: 0,
-    akademik: 0,
     para: 0
 };
 
@@ -375,20 +375,25 @@ const OLAYLAR = [
         ]
     }
 ];
+// tip: 'aktivite'   → aktiviteGrup içinden toplam hedef kadar aktivite yap
+// tip: 'npc_konuş'  → hedef kadar NPC ile konuşmayı bitir
+// tip: 'stat_artir' → günün başındaki statına göre hedef kadar artır
 const GUNLUK_GOREVLER = [
-    { id: 'g1', isim: 'Bugun ders calis', hedef: 'akademik', miktar: 10, odul: { para: 50 }, aciklama: 'Akademik statini 10 artir' },
-    { id: 'g2', isim: 'Spor yap', hedef: 'saglik', miktar: 15, odul: { enerji: 20 }, aciklama: 'Saglik statini 15 artir' },
-    { id: 'g3', isim: 'Arkadaslarinla vakit gec', hedef: 'sosyal', miktar: 20, odul: { para: 30 }, aciklama: 'Sosyal statini 20 artir' },
-    { id: 'g4', isim: 'Para kazan', hedef: 'para', miktar: 100, odul: { enerji: 30 }, aciklama: '100 TL kazan' },
-    { id: 'g5', isim: 'Enerjini koru', hedef: 'enerji', miktar: 80, odul: { para: 40 }, aciklama: 'Enerjiyi 80in ustunde tut' },
-    { id: 'g6', isim: 'Saglikli kal', hedef: 'saglik', miktar: 70, odul: { para: 60 }, aciklama: 'Sagligi 70in ustunde tut' },
-    { id: 'g7', isim: 'Cok calis', hedef: 'akademik', miktar: 80, odul: { para: 100 }, aciklama: 'Akademigi 80in ustunde tut' },
-    { id: 'g8', isim: 'Sosyal ol', hedef: 'sosyal', miktar: 75, odul: { sosyal: 10 }, aciklama: 'Sosyali 75in ustunde tut' },
+    { id: 'g1', tip: 'aktivite', isim: 'Ders çalış', aciklama: '2 kez çalışma yap', aktiviteGrup: ['ders', 'dersDerin', 'arastir'], hedef: 2, odul: { para: 70 } },
+    { id: 'g2', tip: 'aktivite', isim: 'Spor yap', aciklama: '2 kez spor yap', aktiviteGrup: ['spor'], hedef: 2, odul: { para: 40 } },
+    { id: 'g3', tip: 'aktivite', isim: 'Düzgün ye', aciklama: 'Kafeteryada 2 kez ye', aktiviteGrup: ['yemek'], hedef: 2, odul: { saglik: 8, para: 20 } },
+    { id: 'g4', tip: 'aktivite', isim: 'Sosyalleş', aciklama: '2 kez sosyal aktivite yap', aktiviteGrup: ['sosyal'], hedef: 2, odul: { para: 35 } },
+    { id: 'g5', tip: 'aktivite', isim: 'Dinlen', aciklama: '2 kez dinlen veya TV izle', aktiviteGrup: ['dinlen', 'tv'], hedef: 2, odul: { para: 25 } },
+    { id: 'g6', tip: 'npc_konuş', isim: 'Biriyle sohbet et', aciklama: '1 öğrenci ile konuş', hedef: 1, odul: { sosyal: 10, para: 40 } },
+    { id: 'g7', tip: 'npc_konuş', isim: '2 kişiyle tanış', aciklama: '2 farklı öğrenci ile konuş', hedef: 2, odul: { sosyal: 15, para: 60 } },
+    { id: 'g8', tip: 'stat_artir', isim: 'Akademik ilerleme', aciklama: 'Akademiği 20 puan artır', hedef: 'akademik', miktar: 20, odul: { para: 80 } },
+    { id: 'g9', tip: 'stat_artir', isim: 'Sağlığını yükselt', aciklama: 'Sağlığı 15 puan artır', hedef: 'saglik', miktar: 15, odul: { para: 50 } },
+    { id: 'g10', tip: 'stat_artir', isim: 'Sosyal kazan', aciklama: 'Sosyali 20 puan artır', hedef: 'sosyal', miktar: 20, odul: { para: 45 } },
 ];
 
 function rastgeleGorevler() {
     const karisik = [...GUNLUK_GOREVLER].sort(() => Math.random() - 0.5);
-    return karisik.slice(0, 3).map(g => ({ ...g, tamamlandi: false, baslangic: null }));
+    return karisik.slice(0, 3).map(g => ({ ...g, tamamlandi: false, ilerleme: 0 }));
 }
 
 export function useOyun() {
@@ -399,10 +404,21 @@ export function useOyun() {
     const [gun, setGun] = useState(1);
     const [calisiyor, setCalisiyor] = useState(true);
     const [mesaj, setMesaj] = useState('Güne başlıyorsun...');
+    const [oyunBitti, setOyunBitti] = useState(false);
+    const [oyunBitisNedeni, setOyunBitisNedeni] = useState('');
     const [mevcutOlay, setMevcutOlay] = useState(null);
     const [gunlukGorevler, setGunlukGorevler] = useState(rastgeleGorevler);
     const [tamamlananGorevler, setTamamlananGorevler] = useState([]);
     const [miniOyun, setMiniOyun] = useState(null);
+    // Günlük sayaçlar
+    const [gunlukAktiviteSayaci, setGunlukAktiviteSayaci] = useState({});
+    const [npcKonusmaSayisi, setNpcKonusmaSayisi] = useState(0);
+    const [gunBasiStatlar, setGunBasiStatlar] = useState(BASLANGIC_STATLARI);
+    // Ref'ler gün sonu ceza hesabı için (stale closure sorununu önler)
+    const gunlukGorevlerRef = useRef([]);
+    const statlarRef = useRef(BASLANGIC_STATLARI);
+    useEffect(() => { gunlukGorevlerRef.current = gunlukGorevler; }, [gunlukGorevler]);
+    useEffect(() => { statlarRef.current = statlar; }, [statlar]);
     const statGuncelle = (etkiler) => {
         setStatlar(s => {
             const yeni = { ...s };
@@ -421,6 +437,27 @@ export function useOyun() {
             setDonemSonu(true);
         }
     }, [gun]);
+
+    const OYUN_BITIS_NEDENLER = {
+        saglik:   'Sağlığın tamamen bozuldu, hastaneye kaldırıldın. 💀',
+        enerji:   'Tamamen tükenerek yıkıldın, bir daha kalkamadın. 😴',
+        akademik: 'Akademik başarısızlık nedeniyle okuldan atıldın. 📚',
+        sosyal:   'Tamamen yalnızlaştın, ağır bir depresyona girdin. 💔',
+        para:     'Paranız bitti, yurdu terk etmek zorunda kaldın. 💸',
+    };
+
+    useEffect(() => {
+        if (oyunBitti) return;
+        const kritik = ['saglik', 'enerji', 'akademik', 'sosyal', 'para'];
+        for (const stat of kritik) {
+            if (statlar[stat] <= 0) {
+                setCalisiyor(false);
+                setOyunBitti(true);
+                setOyunBitisNedeni(OYUN_BITIS_NEDENLER[stat]);
+                return;
+            }
+        }
+    }, [statlar, oyunBitti]);
 
 
     // Gerçek zamanlı saat
@@ -457,41 +494,53 @@ export function useOyun() {
         return () => clearInterval(interval);
     }, [calisiyor, mevcutOlay, gun]);
 
-    // Görev takibi — stat değişince kontrol et
+    // Görev takibi — aktivite/npc/stat değişince kontrol et
     useEffect(() => {
         setGunlukGorevler(onceki => {
             let degisti = false;
             const yeni = onceki.map(gorev => {
                 if (gorev.tamamlandi) return gorev;
 
+                let ilerleme = gorev.ilerleme || 0;
                 let tamamlandi = false;
-                if (gorev.hedef === 'para') {
-                    tamamlandi = statlar.para >= gorev.miktar;
-                } else {
-                    tamamlandi = statlar[gorev.hedef] >= gorev.miktar;
+
+                if (gorev.tip === 'aktivite') {
+                    ilerleme = (gorev.aktiviteGrup || []).reduce(
+                        (sum, id) => sum + (gunlukAktiviteSayaci[id] || 0), 0
+                    );
+                    tamamlandi = ilerleme >= gorev.hedef;
+                } else if (gorev.tip === 'npc_konuş') {
+                    ilerleme = npcKonusmaSayisi;
+                    tamamlandi = ilerleme >= gorev.hedef;
+                } else if (gorev.tip === 'stat_artir') {
+                    ilerleme = Math.max(0, statlar[gorev.hedef] - (gunBasiStatlar[gorev.hedef] || 0));
+                    tamamlandi = ilerleme >= gorev.miktar;
                 }
 
                 if (tamamlandi) {
                     degisti = true;
-                    return { ...gorev, tamamlandi: true };
+                    return { ...gorev, tamamlandi: true, ilerleme };
+                }
+                if (ilerleme !== gorev.ilerleme) {
+                    degisti = true;
+                    return { ...gorev, ilerleme };
                 }
                 return gorev;
             });
 
             if (degisti) {
-                // Ödülleri ayrı ver
                 yeni.forEach((gorev, i) => {
                     if (gorev.tamamlandi && !onceki[i].tamamlandi) {
                         setTimeout(() => {
                             setStatlar(s => {
                                 const yeniS = { ...s };
                                 for (let stat in gorev.odul) {
-                                    if (stat === 'para') yeniS.para += gorev.odul.para;
-                                    else yeniS[stat] = Math.min(100, s[stat] + gorev.odul[stat]);
+                                    if (stat === 'para') yeniS.para = Math.max(0, yeniS.para + gorev.odul[stat]);
+                                    else yeniS[stat] = Math.min(100, yeniS[stat] + gorev.odul[stat]);
                                 }
                                 return yeniS;
                             });
-                            setMesaj(`Gorev tamamlandi: ${gorev.isim}!`);
+                            setMesaj(`Görev tamamlandı: ${gorev.isim}!`);
                         }, 100);
                     }
                 });
@@ -499,9 +548,31 @@ export function useOyun() {
 
             return degisti ? yeni : onceki;
         });
-    }, [statlar.akademik, statlar.saglik, statlar.sosyal, statlar.enerji, statlar.para]);
-    // Yeni gün — görevleri yenile
+    }, [statlar.akademik, statlar.saglik, statlar.sosyal, statlar.enerji, gunlukAktiviteSayaci, npcKonusmaSayisi, gunBasiStatlar]);
+
+    // Yeni gün — ceza uygula, sayaçları sıfırla, görevleri yenile
     useEffect(() => {
+        if (gun === 1) return;
+
+        const gorevler = gunlukGorevlerRef.current;
+        const tamamlanmayan = gorevler.filter(g => !g.tamamlandi);
+
+        if (tamamlanmayan.length > 0) {
+            const ceza = tamamlanmayan.length;
+            setStatlar(s => ({
+                ...s,
+                akademik: Math.max(0, s.akademik - ceza * 5),
+                sosyal: Math.max(0, s.sosyal - ceza * 3),
+            }));
+            setMesaj(`${tamamlanmayan.length} görev tamamlanamadı! Akademik -${ceza * 5}, Sosyal -${ceza * 3}.`);
+        } else {
+            setMesaj('Tüm görevleri tamamladın! Bonus enerji kazandın.');
+            setStatlar(s => ({ ...s, enerji: Math.min(100, s.enerji + 10) }));
+        }
+
+        setGunlukAktiviteSayaci({});
+        setNpcKonusmaSayisi(0);
+        setGunBasiStatlar({ ...statlarRef.current });
         setGunlukGorevler(rastgeleGorevler());
         setTamamlananGorevler([]);
     }, [gun]);
@@ -550,8 +621,19 @@ export function useOyun() {
         setCalisiyor(true);
     }
 
+    // NPC konuşması tamamlandı
+    function npcKonustu() {
+        setNpcKonusmaSayisi(s => s + 1);
+    }
+
     // Aktivite yap
     function aktiviteYap(aktivite) {
+        if (aktivite.id) {
+            setGunlukAktiviteSayaci(s => ({
+                ...s,
+                [aktivite.id]: (s[aktivite.id] || 0) + 1
+            }));
+        }
         setStatlar(onceki => {
             const yeni = { ...onceki };
             for (let stat in aktivite.etkiler) {
@@ -612,6 +694,9 @@ export function useOyun() {
         },
         statGuncelle,
         miniOyun,
-        setMiniOyun
+        setMiniOyun,
+        npcKonustu,
+        oyunBitti,
+        oyunBitisNedeni,
     };
 }

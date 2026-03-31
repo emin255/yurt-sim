@@ -40,6 +40,96 @@ const SPRITES = {
     'gardropKapalı': { file: 'wardrobes_BR.png', sx: 13, sy: 29, sw: 55, sh: 70 },
     'gardropAcık': { file: 'wardrobes_BR.png', sx: 76, sy: 29, sw: 72, sh: 79 },
     'cekmece': { file: 'wardrobes_BR.png', sx: 204, sy: 21, sw: 56, sh: 44 },
+    // ── teknolojik.png ──────────────────────────────────────────────────────
+    // TV Sehpalar (Satır 1)
+    'tvSehpa1':              { file: 'teknolojik.png', sx: 61,   sy: 57,   sw: 333, sh: 315 }, // Koyu LCD TV + koyu ahşap sehpa (DVD dahil)
+    'tvSehpa2':              { file: 'teknolojik.png', sx: 428,  sy: 91,   sw: 315, sh: 281 }, // Koyu LCD TV + ahşap sehpa
+    'tvSehpaOyun':           { file: 'teknolojik.png', sx: 778,  sy: 91,   sw: 309, sh: 281 }, // Oyun ekranlı renkli TV + açık sehpa
+    'crtTvSehpa':            { file: 'teknolojik.png', sx: 1128, sy: 109,  sw: 229, sh: 263 }, // Retro CRT TV + dolaplı ahşap sehpa
+    'crtTvEski':             { file: 'teknolojik.png', sx: 1395, sy: 117,  sw: 221, sh: 255 }, // Eski parazitli CRT TV
+    'tvArabali':             { file: 'teknolojik.png', sx: 1672, sy: 91,   sw: 241, sh: 281 }, // Düz monitör + tekerlekli metal sehpa
+    'tvKucuk':               { file: 'teknolojik.png', sx: 1961, sy: 119,  sw: 217, sh: 253 }, // Küçük koyu TV + basit sehpa
+    // TV Sehpalar (Satır 2) + Medya + Kumandalar
+    'tvSehpaAcik':           { file: 'teknolojik.png', sx: 61,   sy: 427,  sw: 333, sh: 311 }, // Büyük mavi ekran TV + açık ahşap sehpa
+    'tvSehpaGri':            { file: 'teknolojik.png', sx: 428,  sy: 441,  sw: 315, sh: 297 }, // Düz TV + gri sehpa
+    'tvSehpaBeyaz':          { file: 'teknolojik.png', sx: 778,  sy: 441,  sw: 309, sh: 297 }, // Geniş düz TV + beyaz sehpa
+    'tvSehpaSiyah':          { file: 'teknolojik.png', sx: 1128, sy: 447,  sw: 231, sh: 291 }, // Düz TV + siyah ince sehpa
+    'tvSehpaKoyu':           { file: 'teknolojik.png', sx: 1394, sy: 451,  sw: 223, sh: 287 }, // Koyu TV + koyu sehpa
+    'medyaKonsol1':          { file: 'teknolojik.png', sx: 1674, sy: 413,  sw: 237, sh: 153 }, // Koyu medya rafı / set-top box
+    'medyaKonsol2':          { file: 'teknolojik.png', sx: 1674, sy: 580,  sw: 237, sh: 153 }, // Gri medya rafı / set-top box
+    'kumanda1':              { file: 'teknolojik.png', sx: 1971, sy: 463,  sw: 43,  sh: 119 }, // TV kumandası (siyah)
+    'kumanda2':              { file: 'teknolojik.png', sx: 2030, sy: 463,  sw: 47,  sh: 119 }, // TV kumandası (koyu gri)
+    'kumanda3':              { file: 'teknolojik.png', sx: 2092, sy: 463,  sw: 41,  sh: 119 }, // TV kumandası (ince)
+    'kumanda4':              { file: 'teknolojik.png', sx: 2149, sy: 477,  sw: 37,  sh: 83  }, // TV kumandası (mini)
+    // Masaüstü Bilgisayarlar (Satır 3)
+    'masaustuBilgisayar1':   { file: 'teknolojik.png', sx: 65,   sy: 788,  sw: 431, sh: 357 }, // Gri kule PC + monitör + kahve masa
+    'masaustuBilgisayar2':   { file: 'teknolojik.png', sx: 539,  sy: 796,  sw: 433, sh: 349 }, // Koyu kule PC + monitör + çevre birimleri
+    'masaustuBilgisayar3':   { file: 'teknolojik.png', sx: 1026, sy: 806,  sw: 469, sh: 339 }, // Kule + mavi monitör + tam kurulum
+    'masaustuBilgisayar4':   { file: 'teknolojik.png', sx: 1553, sy: 842,  sw: 301, sh: 303 }, // İnce PC + monitör
+    'bilgisayarMasasi':      { file: 'teknolojik.png', sx: 1905, sy: 916,  sw: 301, sh: 229 }, // Boş bilgisayar masası
+    // Dizüstü + Dolap + Ofis Koltuğu (Satır 4)
+    'dizustuBilgisayar1':    { file: 'teknolojik.png', sx: 71,   sy: 1202, sw: 335, sh: 253 }, // 2 laptop + açık ahşap masa
+    'dizustuBilgisayar2':    { file: 'teknolojik.png', sx: 444,  sy: 1202, sw: 301, sh: 253 }, // Laptop + koyu masa
+    'hepsibirArada':         { file: 'teknolojik.png', sx: 788,  sy: 1186, sw: 277, sh: 269 }, // All-in-one / iMac tarzı bilgisayar
+    'dosyaDolabiKoyu':       { file: 'teknolojik.png', sx: 1118, sy: 1226, sw: 127, sh: 229 }, // 2 çekmeceli koyu dosya dolabı
+    'dosyaDolabiGri':        { file: 'teknolojik.png', sx: 1288, sy: 1226, sw: 129, sh: 229 }, // 2 çekmeceli gri dosya dolabı
+    'ofisKoltugu1':          { file: 'teknolojik.png', sx: 1530, sy: 1232, sw: 131, sh: 223 }, // Ofis koltuğu siyah 1
+    'ofisKoltugu2':          { file: 'teknolojik.png', sx: 1692, sy: 1232, sw: 139, sh: 223 }, // Ofis koltuğu siyah 2
+    'ofisKoltugu3':          { file: 'teknolojik.png', sx: 1868, sy: 1232, sw: 137, sh: 223 }, // Ofis koltuğu kahverengi
+    'ofisKoltugu4':          { file: 'teknolojik.png', sx: 2046, sy: 1232, sw: 139, sh: 223 }, // Ofis koltuğu bej
+    // Konsollar (Satır 5 üst)
+    'ps1Konsol':             { file: 'teknolojik.png', sx: 65,   sy: 1538, sw: 145, sh: 109 }, // PlayStation tarzı koyu konsol
+    'snesKonsol':            { file: 'teknolojik.png', sx: 256,  sy: 1518, sw: 145, sh: 129 }, // SNES tarzı bej konsol
+    'kasetKonsol':           { file: 'teknolojik.png', sx: 455,  sy: 1524, sw: 139, sh: 127 }, // Kaset/kartuş konsol
+    // Hoparlörler (Satır 5 üst)
+    'kucukHoparlor':         { file: 'teknolojik.png', sx: 659,  sy: 1524, sw: 75,  sh: 115 }, // Küçük siyah hoparlör
+    'hoparlor1':             { file: 'teknolojik.png', sx: 797,  sy: 1512, sw: 79,  sh: 127 }, // Kahverengi orta hoparlör
+    // Masa Lambaları (Satır 5 alt — r5c1-c3)
+    'masaLambasiKoyu':       { file: 'teknolojik.png', sx: 71,   sy: 1672, sw: 125, sh: 157 }, // Masa lambası koyu (eklemli kol)
+    'masaLambasiBeyaz':      { file: 'teknolojik.png', sx: 254,  sy: 1670, sw: 125, sh: 159 }, // Masa lambası beyaz/gümüş
+    'masaLambasiBej':        { file: 'teknolojik.png', sx: 435,  sy: 1678, sw: 135, sh: 151 }, // Masa lambası bej/ahşap
+    // Büyük Hoparlörler (Satır 5 alt — r5c4-c6)
+    'ortaHoparlor':          { file: 'teknolojik.png', sx: 651,  sy: 1678, sw: 89,  sh: 151 }, // Orta boy koyu hoparlör
+    'hoparlor2':             { file: 'teknolojik.png', sx: 787,  sy: 1657, sw: 103, sh: 173 }, // Koyu orta hoparlör
+    'hoparlor3':             { file: 'teknolojik.png', sx: 946,  sy: 1511, sw: 107, sh: 319 }, // Uzun 3 wooferli kule hoparlör
+    // Yazıcı + Faks + Lambalar + Küre (r5c7)
+    'yazici':                { file: 'teknolojik.png', sx: 1182, sy: 1507, sw: 154, sh: 151 }, // Lazer/mürekkep yazıcı
+    'faks':                  { file: 'teknolojik.png', sx: 1374, sy: 1507, sw: 156, sh: 155 }, // Faks makinesi (ahizeli)
+    'masaLambasi1':          { file: 'teknolojik.png', sx: 1129, sy: 1679, sw: 102, sh: 151 }, // Masa lambası gri (klasik)
+    'masaLambasi2':          { file: 'teknolojik.png', sx: 1275, sy: 1688, sw: 94,  sh: 142 }, // Masa lambası kahve/bej
+    'masaKure':              { file: 'teknolojik.png', sx: 1374, sy: 1717, sw: 128, sh: 113 }, // Dünya küresi (masa)
+    // Stereo + Saat + Düzenleyici (r5c8)
+    'stereo1':               { file: 'teknolojik.png', sx: 1583, sy: 1526, sw: 148, sh: 127 }, // Stereo/kaset çalar koyu
+    'stereo2':               { file: 'teknolojik.png', sx: 1772, sy: 1501, sw: 139, sh: 153 }, // HiFi/stereo bej/kahve
+    'masaSaati':             { file: 'teknolojik.png', sx: 1557, sy: 1731, sw: 76,  sh: 89  }, // Yuvarlak masa saati
+    'masaDuzenleyici':       { file: 'teknolojik.png', sx: 1685, sy: 1703, sw: 227, sh: 127 }, // Masa düzenleyici (kağıt + kalemlik)
+    // Projektör + Kağıt Destesi (r5c9)
+    'projektor':             { file: 'teknolojik.png', sx: 2027, sy: 1501, sw: 140, sh: 148 }, // Tavan projektörü
+    'kagitDeste':            { file: 'teknolojik.png', sx: 1959, sy: 1684, sw: 229, sh: 145 }, // Kağıt + dosya destesi
+    // ── kantin_esyalar.png ──────────────────────────────────────────────────
+    'otomat_icecek':        { file: 'kantin_esyalar.png', sx: 101,  sy: 84,   sw: 210, sh: 318 }, // İçecek otomatı (ön görünüm)
+    'otomat_yiyecek':       { file: 'kantin_esyalar.png', sx: 324,  sy: 84,   sw: 186, sh: 318 }, // Yiyecek otomatı (ön görünüm)
+    'yemek_tezgahi_sicak':  { file: 'kantin_esyalar.png', sx: 552,  sy: 84,   sw: 410, sh: 318 }, // Sıcak yemek tezgahı
+    'tatli_reyonu_camli':   { file: 'kantin_esyalar.png', sx: 1007, sy: 84,   sw: 261, sh: 318 }, // Sandviç / pasta reyonu
+    'kahve_makinesi':       { file: 'kantin_esyalar.png', sx: 1324, sy: 84,   sw: 342, sh: 318 }, // Kahve makineleri + tezgah
+    'kantin_masasi':        { file: 'kantin_esyalar.png', sx: 1720, sy: 84,   sw: 478, sh: 318 }, // Kantin masası + tabureler
+    'tepsi_istasyonu':      { file: 'kantin_esyalar.png', sx: 69,   sy: 1510, sw: 167, sh: 320 }, // Tepsi arabası (arka görünüm)
+    'menu_panosu':          { file: 'kantin_esyalar.png', sx: 449,  sy: 1510, sw: 148, sh: 320 }, // Menü panosu (şövale)
+    'mikrodalga':           { file: 'kantin_esyalar.png', sx: 650,  sy: 1510, sw: 199, sh: 320 }, // Mikrodalga + sehpa
+    'su_sebili':            { file: 'kantin_esyalar.png', sx: 873,  sy: 1510, sw: 190, sh: 320 }, // İçecek dolabı (cam kapılı)
+
+    // ── spor_salonu.png ─────────────────────────────────────────────────────
+    'dumbell_raki':         { file: 'spor_salonu.png', sx: 357,  sy: 836,  sw: 343, sh: 332 }, // Büyük dumbbell rafı (izometrik)
+    'squat_rack':           { file: 'spor_salonu.png', sx: 751,  sy: 836,  sw: 287, sh: 332 }, // Power cage (izometrik)
+    'agirlik_sehpasi':      { file: 'spor_salonu.png', sx: 996,  sy: 84,   sw: 295, sh: 318 }, // Bench press + halter rack (ön)
+    'barfiks_istasyonu':    { file: 'spor_salonu.png', sx: 2006, sy: 84,   sw: 195, sh: 318 }, // Barfiks / dip istasyonu (ön)
+    'kosu_bandi':           { file: 'spor_salonu.png', sx: 1294, sy: 470,  sw: 119, sh: 293 }, // Koşu bandı (ön)
+    'kondisyon_bisikleti':  { file: 'spor_salonu.png', sx: 1585, sy: 470,  sw: 97,  sh: 293 }, // Kondisyon bisikleti (ön)
+    'plates_set':           { file: 'spor_salonu.png', sx: 1846, sy: 836,  sw: 366, sh: 332 }, // Fitnes topları + eğik bench (izometrik)
+    'sporcu_dolabi':        { file: 'spor_salonu.png', sx: 1148, sy: 836,  sw: 252, sh: 332 }, // Sporcu dolabı (izometrik)
+    'mat_rulo':             { file: 'spor_salonu.png', sx: 113,  sy: 1226, sw: 246, sh: 224 }, // Yoga matı açık
+    'havlu_askisi':         { file: 'spor_salonu.png', sx: 463,  sy: 1226, sw: 220, sh: 224 }, // Havlu askısı
+    'vucut_tartisi':        { file: 'spor_salonu.png', sx: 1236, sy: 1664, sw: 133, sh: 165 }, // Vücut tartısı (baskül)
 };
 
 const ZEMIN_SPRITES = {
@@ -82,12 +172,13 @@ const ODALAR = {
         duvarSprite: 'tugla_acik',
         nesneler: [
             { x: 1, y: 1.5, w: 3, h: 2, sprite: 'yatak', isim: 'Yatak', aktiviteId: 'uyu' },
-            { x: 5, y: 1.5, w: 3, h: 2, sprite: 'masa', isim: 'Calisma Masasi', aktiviteId: 'ders' },
+            { x: 5, y: 1.5, w: 3, h: 2, sprite: 'dizustuBilgisayar2', isim: 'Bilgisayar', aktiviteId: 'ders' },
             { x: 10, y: 1, w: 2, h: 2, sprite: 'kitaplık1', isim: 'Kitaplik', aktiviteId: 'ders' },
             { x: 13, y: 0, w: 2, h: 2, sprite: 'pencere1', isim: 'Pencere', aktiviteId: null },
             { x: 1, y: 9, w: 2, h: 2, sprite: 'halıKare', isim: 'Hali', aktiviteId: null },
             { x: 3, y: 1.5, w: 2, h: 2, sprite: 'kucukLamba1', isim: 'Telefon', aktiviteId: 'sosyal' },
             { x: 18, y: 0, w: 2, h: 3, sprite: 'gardropKapalı', isim: 'Gardrop', aktiviteId: null },
+            { x: 8, y: 1.5, w: 1, h: 2, sprite: 'masaLambasiKoyu', isim: 'Masa Lambasi', aktiviteId: null },
         ],
         kapılar: [
             { x: 11, y: 12, w: 2, h: 2, hedef: 'koridor', isim: 'Koridor ↓', sprite: 'kapıKapalı' },
@@ -118,9 +209,11 @@ const ODALAR = {
         nesneler: [
             { x: 1, y: 2, w: 2, h: 4, sprite: 'kitaplık1', isim: 'Kitaplik1', aktiviteId: 'dersDerin' },
             { x: 4, y: 2, w: 2, h: 4, sprite: 'kitaplık2', isim: 'Kitaplik2', aktiviteId: 'dersDerin' },
-            { x: 8, y: 3, w: 4, h: 3, sprite: 'masa', isim: 'Okuma Masasi', aktiviteId: 'arastir' },
-            { x: 13, y: 2, w: 2, h: 3, sprite: 'cekmece', isim: 'Bilgisayar', aktiviteId: 'dersDerin' },
+            { x: 8, y: 3, w: 4, h: 3, sprite: 'masaustuBilgisayar4', isim: 'Okuma Masasi', aktiviteId: 'arastir' },
+            { x: 13, y: 2, w: 2, h: 3, sprite: 'dosyaDolabiKoyu', isim: 'Dosya Dolabi', aktiviteId: null },
             { x: 17, y: 2, w: 2, h: 4, sprite: 'kitapDolabı', isim: 'Kitap Dolabi', aktiviteId: 'dersDerin' },
+            { x: 16, y: 2, w: 1, h: 2, sprite: 'masaLambasiBej', isim: 'Lamba', aktiviteId: null },
+            { x: 7, y: 8, w: 3, h: 2, sprite: 'kagitDeste', isim: 'Kagitlar', aktiviteId: null },
         ],
         kapılar: [
             { x: 21, y: 5, w: 2, h: 2, hedef: 'koridor', isim: 'Koridor →', sprite: 'kapıKapalı' },
@@ -135,10 +228,14 @@ const ODALAR = {
         duvarSprite: 'tugla_beyaz',
         nesneler: [
             { x: 2, y: 2, w: 4, h: 3, sprite: 'buyukKoltuk', isim: 'Kanepe', aktiviteId: 'dinlen' },
-            { x: 8, y: 2, w: 3, h: 3, sprite: 'masa', isim: 'TV Masasi', aktiviteId: 'tv' },
+            { x: 7, y: 1, w: 4, h: 3, sprite: 'tvSehpa1', isim: 'Televizyon', aktiviteId: 'tv' },
+            { x: 11, y: 2, w: 1, h: 2, sprite: 'hoparlor2', isim: 'Hoparlor', aktiviteId: null },
+            { x: 6, y: 2, w: 1, h: 2, sprite: 'hoparlor1', isim: 'Hoparlor', aktiviteId: null },
+            { x: 13, y: 2, w: 2, h: 2, sprite: 'ps1Konsol', isim: 'Oyun Konsolu', aktiviteId: 'tv' },
             { x: 2, y: 7, w: 3, h: 3, sprite: 'sandalye', isim: 'Masa1', aktiviteId: 'sosyal' },
             { x: 10, y: 7, w: 3, h: 3, sprite: 'sandalye', isim: 'Masa2', aktiviteId: 'sosyal' },
             { x: 16, y: 2, w: 2, h: 3, sprite: 'lamba1', isim: 'Lamba', aktiviteId: null },
+            { x: 16, y: 7, w: 2, h: 2, sprite: 'stereo1', isim: 'Stereo', aktiviteId: null },
         ],
         kapılar: [
             { x: 0, y: 5, w: 2, h: 2, hedef: 'koridor', isim: 'Koridor ←', sprite: 'kapıKapalı' },
@@ -168,20 +265,38 @@ const ODALAR = {
     },
     kantin: {
         isim: 'Kantin',
-        w: 22, h: 12,
+        w: 24, h: 14,
         zeminRenk: '#c8a96e',
         duvarRenk: '#a07840',
         zeminSprite: 'karo_seftali',
         duvarSprite: 'tugla_beyaz',
         nesneler: [
-            { x: 1, y: 2, w: 6, h: 2, sprite: 'tezgah', isim: 'Tezgah', aktiviteId: 'yemek' },
-            { x: 9, y: 2, w: 2, h: 3, sprite: 'buzdolabıKapalı', isim: 'Buzdolabi', aktiviteId: 'atistir' },
-            { x: 2, y: 5, w: 3, h: 2, sprite: 'masa', isim: 'Masa1', aktiviteId: 'yemek' },
-            { x: 7, y: 5, w: 3, h: 2, sprite: 'masa', isim: 'Masa2', aktiviteId: 'yemek' },
-            { x: 12, y: 5, w: 3, h: 2, sprite: 'masa', isim: 'Masa3', aktiviteId: 'yemek' },
+            // --- Yemek Servis Hattı (Üst Duvar Boyunca) ---
+            { x: 1, y: 1, w: 2, h: 3, sprite: 'tepsi_istasyonu', isim: 'Tepsi Alanı', aktiviteId: null },
+            { x: 3, y: 1.5, w: 4, h: 3, sprite: 'yemek_tezgahi_sicak', isim: 'Sıcak Yemek', aktiviteId: 'yemek' },
+            { x: 7, y: 1.5, w: 2.5, h: 2, sprite: 'tatli_reyonu_camli', isim: 'Tatlı Reyonu', aktiviteId: 'atistir' },
+            { x: 10, y: 1.2, w: 1.5, h: 2.5, sprite: 'menu_panosu', isim: 'Günün Menüsü', aktiviteId: null },
+            
+            // --- Otomatlar ve Su (Sağ Duvar) ---
+            { x: 13, y: 1, w: 2, h: 3.5, sprite: 'otomat_yiyecek', isim: 'Yiyecek Otomatı', aktiviteId: 'atistir' },
+            { x: 15, y: 1, w: 2, h: 3.5, sprite: 'otomat_icecek', isim: 'İçecek Otomatı', aktiviteId: 'atistir' },
+            { x: 17, y: 1, w: 2, h: 3.5, sprite: 'su_sebili', isim: 'Su Sebili', aktiviteId: null },
+            
+            // --- Kahve ve Isıtma Köşesi (Sol Alt) ---
+            { x: 1, y: 10, w: 3, h: 2.5, sprite: 'kahve_makinesi', isim: 'Kahve Makinesi', aktiviteId: 'atistir' },
+            { x: 4, y: 10, w: 2, h: 2.5, sprite: 'mikrodalga', isim: 'Mikrodalga', aktiviteId: null },
+            
+            // --- Oturma Alanı (Merkezi Bölge) ---
+            { x: 7.5, y: 6.5, w: 5, h: 3, sprite: 'kantin_masasi', isim: 'Masa 1', aktiviteId: 'yemek' },
+            { x: 13.5, y: 6.5, w: 5, h: 3, sprite: 'kantin_masasi', isim: 'Masa 2', aktiviteId: 'yemek' },
+            { x: 7.5, y: 10, w: 5, h: 3, sprite: 'kantin_masasi', isim: 'Masa 3', aktiviteId: 'yemek' },
+            { x: 13.5, y: 10, w: 5, h: 3, sprite: 'kantin_masasi', isim: 'Masa 4', aktiviteId: 'yemek' },
+            
+            // --- Eğlence ve Dekor ---
+            { x: 20, y: 1, w: 2, h: 2, sprite: 'crtTvEski', isim: 'TV', aktiviteId: 'tv' },
         ],
         kapılar: [
-            { x: 0, y: 5, w: 2, h: 2, hedef: 'bahce', isim: 'Bahce ←', sprite: 'kapıKapalı' },
+            { x: 0, y: 6, w: 2, h: 2, hedef: 'bahce', isim: 'Bahce ←', sprite: 'kapıKapalı' },
         ]
     },
     sporAlani: {
@@ -192,14 +307,51 @@ const ODALAR = {
         zeminSprite: 'arduvaz_koyu',
         duvarSprite: 'beton',
         nesneler: [
-            { x: 2, y: 2, w: 4, h: 3, sprite: 'masa', isim: 'Kale1', aktiviteId: 'spor' },
-            { x: 12, y: 2, w: 4, h: 3, sprite: 'masa', isim: 'Kale2', aktiviteId: 'spor' },
-            { x: 2, y: 8, w: 3, h: 3, sprite: 'cekmece', isim: 'Aletler1', aktiviteId: 'spor' },
-            { x: 13, y: 8, w: 3, h: 3, sprite: 'cekmece', isim: 'Aletler2', aktiviteId: 'spor' },
-            { x: 7, y: 6, w: 4, h: 2, sprite: 'masa', isim: 'Kort', aktiviteId: 'spor' },
+            // Ağırlık Bölümü (Üst)
+            { x: 1, y: 1, w: 4, h: 3, sprite: 'squat_rack', isim: 'Squat Rack', aktiviteId: 'spor' },
+            { x: 6, y: 1.5, w: 4, h: 2, sprite: 'dumbell_raki', isim: 'Dumbell Seti', aktiviteId: 'spor' },
+            { x: 11, y: 2, w: 3, h: 2, sprite: 'agirlik_sehpasi', isim: 'Ağırlık Sehpası', aktiviteId: 'spor' },
+            { x: 15, y: 1, w: 2, h: 3, sprite: 'barfiks_istasyonu', isim: 'Barfiks Barı', aktiviteId: 'spor' },
+            
+            // Kardiyo Bölümü (Orta)
+            { x: 2, y: 7, w: 2, h: 3, sprite: 'kosu_bandi', isim: 'Koşu Bandı', aktiviteId: 'spor' },
+            { x: 5, y: 7, w: 2, h: 3, sprite: 'kondisyon_bisikleti', isim: 'Egzersiz Bisikleti', aktiviteId: 'spor' },
+            { x: 8, y: 7, w: 2, h: 3, sprite: 'plates_set', isim: 'Plates Alanı', aktiviteId: 'spor' },
+            
+            // Soyunma ve Dinlenme (Alt ve Sağ)
+            { x: 18, y: 1, w: 2, h: 4, sprite: 'sporcu_dolabi', isim: 'Soyunma Dolabı', aktiviteId: null },
+            { x: 21, y: 1, w: 2, h: 4, sprite: 'sporcu_dolabi', isim: 'Soyunma Dolabı', aktiviteId: null },
+            { x: 12, y: 8, w: 3, h: 2, sprite: 'mat_rulo', isim: 'Yoga Matı', aktiviteId: 'spor' },
+            { x: 16, y: 8, w: 2, h: 2, sprite: 'havlu_askisi', isim: 'Havlu Askısı', aktiviteId: null },
+            { x: 2, y: 11, w: 2, h: 2, sprite: 'vucut_tartisi', isim: 'Tartı', aktiviteId: null },
         ],
         kapılar: [
             { x: 0, y: 5, w: 2, h: 2, hedef: 'bahce', isim: 'Bahce ←', sprite: 'kapıKapalı' },
+        ]
+    },
+    bilgisayarLab: {
+        isim: 'Bilgisayar Lab',
+        w: 26, h: 14,
+        zeminRenk: '#4a4a5a',
+        duvarRenk: '#2a2a3a',
+        zeminSprite: 'fayans_gri',
+        duvarSprite: 'beton',
+        nesneler: [
+            { x: 1, y: 1, w: 4, h: 3, sprite: 'masaustuBilgisayar1', isim: 'Bilgisayar 1', aktiviteId: 'bilgisayar' },
+            { x: 6, y: 1, w: 4, h: 3, sprite: 'masaustuBilgisayar2', isim: 'Bilgisayar 2', aktiviteId: 'bilgisayar' },
+            { x: 11, y: 1, w: 4, h: 3, sprite: 'masaustuBilgisayar3', isim: 'Bilgisayar 3', aktiviteId: 'bilgisayar' },
+            { x: 16, y: 1, w: 3, h: 3, sprite: 'hepsibirArada', isim: 'iMac', aktiviteId: 'bilgisayar' },
+            { x: 1, y: 7, w: 4, h: 3, sprite: 'dizustuBilgisayar1', isim: 'Laptop Masasi', aktiviteId: 'arastir' },
+            { x: 6, y: 7, w: 3, h: 3, sprite: 'masaustuBilgisayar4', isim: 'Bilgisayar 4', aktiviteId: 'bilgisayar' },
+            { x: 20, y: 1, w: 2, h: 2, sprite: 'yazici', isim: 'Yazici', aktiviteId: null },
+            { x: 20, y: 4, w: 2, h: 2, sprite: 'faks', isim: 'Faks', aktiviteId: null },
+            { x: 20, y: 7, w: 2, h: 2, sprite: 'dosyaDolabiGri', isim: 'Dosya Dolabi', aktiviteId: null },
+            { x: 10, y: 7, w: 1, h: 2, sprite: 'ofisKoltugu1', isim: 'Koltuk', aktiviteId: null },
+            { x: 16, y: 5, w: 1, h: 2, sprite: 'masaKure', isim: 'Dunya Kuresi', aktiviteId: null },
+            { x: 14, y: 5, w: 2, h: 2, sprite: 'projektor', isim: 'Projektor', aktiviteId: null },
+        ],
+        kapılar: [
+            { x: 12, y: 12, w: 2, h: 2, hedef: 'koridor', isim: 'Koridor ↓', sprite: 'kapıKapalı' },
         ]
     }
 };
@@ -225,7 +377,7 @@ const NPC_CONFIG = {
     ortakAlan: { sayı: 3 },
     kutuphane: { sayı: 2 },
     bahce: { sayı: 4 },
-    kantin: { sayı: 3 },
+    kantin: { sayı: 2, gorevli: true }, // 2 gezgin öğrenci + 1 sabit görevli
     sporAlani: { sayı: 2 },
 };
 
@@ -236,134 +388,15 @@ const NPC_ISIMLERI = [
     'Berk', 'Naz', 'Serkan', 'Duygu', 'Tolga', 'İrem',
 ];
 
-// Her script: { tip, ilkDugum, dugumler: { [id]: { mesaj, secenekler: [{metin, hedef}] } } } }
-const NPC_DIYALOG_HAVUZU = [
-    {
-        tip: 'sosyal',
-        ilkDugum: 'giris',
-        dugumler: {
-            'giris': {
-                mesaj: 'Selam! Seni görmek ne güzel! Bugün ortak alanda çok eğlendim.',
-                secenekler: [
-                    { metin: 'Selam! Sen ne yapıyordun orda?', hedef: 'sohbet', etkiler: { sosyal: 5 } },
-                    { metin: 'Şu an acelem var, sonra konuşuruz.', hedef: 'veda', etkiler: { sosyal: -2 } }
-                ]
-            },
-            'sohbet': {
-                mesaj: 'Biraz TV izledim, biraz da kantine indim. Sen naptın?',
-                secenekler: [
-                    { metin: 'Ders çalıştım kütüphanede.', hedef: 'ders', etkiler: { sosyal: 2 } },
-                    { metin: 'Sadece odada dinlendim.', hedef: 'dinlenme', etkiler: { sosyal: 2 } }
-                ]
-            },
-            'ders': {
-                mesaj: 'Kolay gelsin! Ben de vizeler için başlamalıyım yakında. Görüşürüz!',
-                secenekler: [{ metin: 'Görüşürüz.', hedef: null }]
-            },
-            'dinlenme': {
-                mesaj: 'En iyisi! Bazen sadece yatmak gerekiyor. Hadi görüşürüz.',
-                secenekler: [{ metin: 'Görüşürüz!', hedef: null }]
-            },
-            'veda': {
-                mesaj: 'Tamamdır, işine bak. Görüşürüz!',
-                secenekler: []
-            }
-        }
-    },
-    {
-        tip: 'akademik',
-        ilkDugum: 'giris',
-        dugumler: {
-            'giris': {
-                mesaj: 'Hey! Vize yaklaşıyor, çalışmaya başladın mı?',
-                secenekler: [
-                    { metin: 'Evet, kütüphaneden çıkmıyorum.', hedef: 'evet', etkiler: { sosyal: 3, akademik: 2 } },
-                    { metin: 'Daha başlamadım maalesef.', hedef: 'hayir', etkiler: { sosyal: 2, akademik: -2 } }
-                ]
-            },
-            'evet': {
-                mesaj: 'Harikasın! Eğer notlara ihtiyacın olursa haber ver paslaşırız.',
-                secenekler: [
-                    { metin: 'Teşekkürler, söylerim.', hedef: null, etkiler: { sosyal: 5 } }
-                ]
-            },
-            'hayir': {
-                mesaj: 'Hadi ya... Acele etsen iyi olur, konular çok birikti!',
-                secenekler: [
-                    { metin: 'Haklısın, bugün başlıyorum.', hedef: null, etkiler: { enerji: -5 } },
-                    { metin: 'Daha çok var ya hallederim.', hedef: 'rahat', etkiler: { sosyal: -2 } }
-                ]
-            },
-            'rahat': {
-                mesaj: 'Sen bilirsin... Son gece sabahlamazsın umarım. Görüşürüz.',
-                secenekler: []
-            }
-        }
-    },
-    {
-        tip: 'yorgun',
-        ilkDugum: 'giris',
-        dugumler: {
-            'giris': {
-                mesaj: 'Ugh... sabahtan beri ayaktayım, çok uykum var.',
-                secenekler: [
-                    { metin: 'Neden uyumadın?', hedef: 'sebep', etkiler: { sosyal: 3 } },
-                    { metin: 'Hemen gidip uyu bence.', hedef: 'git_uyu', etkiler: { sosyal: -2 } }
-                ]
-            },
-            'sebep': {
-                mesaj: 'Yandaki odada gece boyu müzik açıktı... Neyse, ayakta uyuyacağım şimdi.',
-                secenekler: [{ metin: 'Geçmiş olsun, görüşürüz.', hedef: null, etkiler: { sosyal: 2 } }]
-            },
-            'git_uyu': {
-                mesaj: 'Evet, yatağıma doğru sürükleniyorum şu an. Bay bay...',
-                secenekler: []
-            }
-        }
-    },
-    {
-        tip: 'enerjik',
-        ilkDugum: 'giris',
-        dugumler: {
-            'giris': {
-                mesaj: 'Yeeyy! Bugün spor yaptım, harika hissediyorum! Sen de spor yapar mısın?',
-                secenekler: [
-                    { metin: 'Kesinlikle! Her gün yaparım.', hedef: 'yaparim', etkiler: { sosyal: 5 } },
-                    { metin: 'Pek bana göre değil ya.', hedef: 'yapmam', etkiler: { sosyal: 0 } }
-                ]
-            },
-            'yaparim': {
-                mesaj: 'Süper! Bir ara beraber açık alanda koçalım o zaman!',
-                secenekler: [{ metin: 'Olur, konuşuruz.', hedef: null, etkiler: { enerji: 5 } }]
-            },
-            'yapmam': {
-                mesaj: 'Ah, bir başlasan çok seversin aslında. Bir düşün!',
-                secenekler: [{ metin: 'Belki bir gün... bay bay!', hedef: null }]
-            }
-        }
-    },
-    {
-        tip: 'sakin',
-        ilkDugum: 'giris',
-        dugumler: {
-            'giris': {
-                mesaj: 'Merhaba, bugün hava ne kadar güzel değil mi?',
-                secenekler: [
-                    { metin: 'Evet çok huzurlu.', hedef: 'evet' },
-                    { metin: 'Ben içerde kalmayı tercih ederim.', hedef: 'hayir' }
-                ]
-            },
-            'evet': {
-                mesaj: 'Kesinlikle. Biraz bahçede oturacağım sanırım. Görüşürüz.',
-                secenekler: []
-            },
-            'hayir': {
-                mesaj: 'Anlıyorum, odanın rahatlığı da güzeldir. Kendine iyi bak.',
-                secenekler: []
-            }
-        }
+const NPC_TIPLER = ['sosyal', 'akademik', 'yorgun', 'enerjik', 'sakin', 'merakli', 'endiseli', 'mutlu'];
+
+// Boş placeholder — AI her konuşmada mesaj ve seçenekleri doldurur
+const BOŞ_DIYALOG = {
+    ilkDugum: 'giris',
+    dugumler: {
+        'giris': { mesaj: '', secenekler: [] }
     }
-];
+};
 
 const YONLER = ['asagi', 'sol', 'sag', 'yukari'];
 
@@ -387,8 +420,6 @@ function npcOlustur(oda, dinamikTile) {
     const hedefX = minX + Math.random() * (maxX - minX);
     const hedefY = minY + Math.random() * (maxY - minY);
 
-    const script = NPC_DIYALOG_HAVUZU[Math.floor(Math.random() * NPC_DIYALOG_HAVUZU.length)];
-
     return {
         x, y,
         hedefX, hedefY,
@@ -397,16 +428,36 @@ function npcOlustur(oda, dinamikTile) {
         bekle: 0,
         hiz: 0.8 + Math.random() * 0.7,
         isim: NPC_ISIMLERI[Math.floor(Math.random() * NPC_ISIMLERI.length)],
-        diyalogAgaci: script.dugumler,
-        ilkDugum: script.ilkDugum,
-        npcTip: script.tip,
+        diyalogAgaci: BOŞ_DIYALOG.dugumler,
+        ilkDugum: BOŞ_DIYALOG.ilkDugum,
+        npcTip: NPC_TIPLER[Math.floor(Math.random() * NPC_TIPLER.length)],
         ayarlar: rastgeleNpcAyarlar(),
         minX, maxX, minY, maxY,
         id: Math.random().toString(36).slice(2),
     };
 }
 
+function kantinGorevlisiOlustur(oda, dinamikTile) {
+    const x = 5 * dinamikTile;
+    const y = 1.8 * dinamikTile;
+    return {
+        x, y,
+        hedefX: x, hedefY: y,
+        yon: 'asagi',
+        adim: 0, bekle: 0, hiz: 0,
+        isim: 'Hatice Teyze',
+        diyalogAgaci: BOŞ_DIYALOG.dugumler,
+        ilkDugum: BOŞ_DIYALOG.ilkDugum,
+        npcTip: 'kantin_gorevlisi',
+        ayarlar: { skinTone: 2, hairType: 4, outfit: 3 },
+        minX: x, maxX: x, minY: y, maxY: y,
+        sabit: true,
+        id: 'kantin_gorevlisi_sabit',
+    };
+}
+
 function npcGuncelle(npc) {
+    if (npc.sabit) return; // Sabit görevli hareket etmez
     if (npc.bekle > 0) {
         npc.bekle--;
         npc.adim = 0;
@@ -562,15 +613,14 @@ function odaCiz(ctx, oda, kamera, yakinRef, karakterPos, TILE, images) {
         for (let gx = 0; gx < oda.w; gx++) {
             const px = ox + gx * TILE;
             const py = oy + gy * TILE;
+            const koyu = (gx + gy) % 2 === 0;
+            ctx.fillStyle = koyu ? oda.zeminRenk : shiftColor(oda.zeminRenk, -15);
+            ctx.fillRect(px, py, TILE, TILE);
             if (zeminImg && zeminImg.complete) {
                 ctx.drawImage(zeminImg,
                     zeminSp.sx, zeminSp.sy, zeminSp.sw, zeminSp.sh,
                     px, py, TILE, TILE
                 );
-            } else {
-                const koyu = (gx + gy) % 2 === 0;
-                ctx.fillStyle = koyu ? oda.zeminRenk : shiftColor(oda.zeminRenk, -15);
-                ctx.fillRect(px, py, TILE, TILE);
             }
         }
     }
@@ -686,7 +736,7 @@ function odaCiz(ctx, oda, kamera, yakinRef, karakterPos, TILE, images) {
 // ============================================================
 // KONUŞMA BALONCUĞU
 // ============================================================
-function konusmaBalonuCiz(ctx, cx, topY, tile, isim, nodeData, seciliIndex) {
+function konusmaBalonuCiz(ctx, cx, topY, tile, isim, nodeData, seciliIndex, yukleniyor = false) {
     const fontSize = Math.max(9, Math.round(tile * 0.38));
     const lineH = fontSize + 4;
     const pad = { x: 12, y: 10 };
@@ -749,12 +799,13 @@ function konusmaBalonuCiz(ctx, cx, topY, tile, isim, nodeData, seciliIndex) {
     const icerikW = Math.max(isimW, maxMesajW, maxSecenekW, tile * 3);
     const balonW = Math.min(icerikW + pad.x * 2, maxW + pad.x * 2);
 
-    const altYaziH = !seceneklerVarsa ? lineH : 0; // Kapat yazısı için
+    const altYaziH = (!seceneklerVarsa && !yukleniyor) ? lineH : 0; // Kapat yazısı için
+    const yuklenigorH = yukleniyor ? lineH * 1.5 : 0;
     let toplamSecenekSatir = 0;
-    secenekSatirlar.forEach(s => toplamSecenekSatir += s.lines.length);
+    if (!yukleniyor) secenekSatirlar.forEach(s => toplamSecenekSatir += s.lines.length);
 
-    const boslukOrtasi = seceneklerVarsa ? lineH * 0.5 : 0;
-    const balonH = pad.y + lineH + 4 + (mesajSatirlar.length * lineH) + boslukOrtasi + (toplamSecenekSatir * lineH) + altYaziH + pad.y;
+    const boslukOrtasi = (seceneklerVarsa && !yukleniyor) ? lineH * 0.5 : 0;
+    const balonH = pad.y + lineH + 4 + (mesajSatirlar.length * lineH) + boslukOrtasi + (toplamSecenekSatir * lineH) + altYaziH + yuklenigorH + pad.y;
 
     const balonX = cx - balonW / 2;
     const balonY = topY - (tile * 2) - balonH - tailH + tile * 0.5;
@@ -828,7 +879,16 @@ function konusmaBalonuCiz(ctx, cx, topY, tile, isim, nodeData, seciliIndex) {
     curY += boslukOrtasi;
 
     // Seçenekler
-    if (seceneklerVarsa) {
+    if (yukleniyor) {
+        // Yükleniyor animasyonu
+        const nokta = Math.floor(Date.now() / 350) % 4;
+        const noktalar = '.'.repeat(nokta);
+        ctx.textAlign = 'center';
+        ctx.font = `${fontSize}px Arial`;
+        ctx.fillStyle = 'rgba(255,215,0,0.6)';
+        curY += lineH * 0.8;
+        ctx.fillText('⏳ Yanıt bekleniyor' + noktalar, cx, curY);
+    } else if (seceneklerVarsa) {
         ctx.textAlign = 'left';
         secenekSatirlar.forEach(s => {
             const isSelected = s.secenek === seciliIndex;
@@ -860,7 +920,7 @@ function shiftColor(hex, amount) {
 // ============================================================
 // ANA COMPONENT
 // ============================================================
-function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif = true, karakterAyarlari, statlar }) {
+function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif = true, karakterAyarlari, statlar, onNpcKonustu }) {
     const canvasRef = useRef(null);
     const karakterRef = useRef({ x: 7 * TILE, y: 7 * TILE, yon: 'sag' });
     const tuslarRef = useRef({});
@@ -872,6 +932,7 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
     const yakinNpcRef = useRef(null);
     const npcDiyalogRef = useRef(null); // { npcId, isim, dugumler, aktifDugumId, seciliIndex }
     const aiMesajRef = useRef({});
+    const npcDiyalogYukleniyor = useRef(false);
 
     async function aiMesajCek(npc) {
         if (aiMesajRef.current[npc.id]) return; // zaten çekilmişse tekrar çekme
@@ -889,12 +950,58 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
                 })
             });
             const data = await res.json();
-            aiMesajRef.current[npc.id] = data.mesaj;
+            // mesaj + secenekler nesnesini sakla
+            aiMesajRef.current[npc.id] = {
+                mesaj: data.mesaj,
+                secenekler: Array.isArray(data.secenekler) ? data.secenekler : []
+            };
         } catch (e) {
             console.error('AI mesaj hatası:', e);
             aiMesajRef.current[npc.id + '_loading'] = false;
         }
     }
+    async function devamMesajCek(npc, oyuncuYaniti, npcMesaj, tur) {
+        npcDiyalogYukleniyor.current = true;
+        // Yükleniyor göstergesi
+        if (npcDiyalogRef.current?.dugumler['giris']) {
+            npcDiyalogRef.current.dugumler['giris'] = {
+                ...npcDiyalogRef.current.dugumler['giris'],
+                mesaj: '...',
+                secenekler: []
+            };
+        }
+        try {
+            const res = await fetch('http://localhost:3001/api/npc-dialog', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    npcTip: npc.npcTip,
+                    statlar: statlar,
+                    npcIsim: npc.isim,
+                    gecmis: { npcMesaj, oyuncuYaniti },
+                    tur
+                })
+            });
+            const data = await res.json();
+            if (npcDiyalogRef.current) {
+                const yeniVeri = {
+                    mesaj: data.mesaj || '',
+                    secenekler: Array.isArray(data.secenekler) ? data.secenekler : []
+                };
+                npcDiyalogRef.current.dugumler['giris'] = yeniVeri;
+                npcDiyalogRef.current.seciliIndex = 0;
+                // Render döngüsünün ilk selamlamayı geri yazmasını önle
+                aiMesajRef.current[npc.id] = yeniVeri;
+            }
+        } catch (e) {
+            console.error('Devam mesaj hatası:', e);
+            if (npcDiyalogRef.current?.dugumler['giris']) {
+                npcDiyalogRef.current.dugumler['giris'].mesaj = 'Bir şeyler ters gitti...';
+            }
+        }
+        npcDiyalogYukleniyor.current = false;
+    }
+
     const [mevcutOdaId, setMevcutOdaId] = useState('yurtOdasi');
 
 
@@ -982,6 +1089,15 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
             tuslarRef.current = {};
         };
         const eBasildi = e => {
+            // ESC ile konuşmayı kapat
+            if (e.key === 'Escape') {
+                if (npcDiyalogRef.current) {
+                    npcDiyalogRef.current = null;
+                    npcDiyalogYukleniyor.current = false;
+                }
+                return;
+            }
+
             const diyalog = npcDiyalogRef.current;
 
             // Yön tuşlarıyla seçenek değiştirme
@@ -1003,6 +1119,9 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
 
             // Diyalog içi E basımı (seçim onayı)
             if (diyalog) {
+                // Yüklenirken E'ye basılmasını engelle
+                if (npcDiyalogYukleniyor.current) return;
+
                 const nodeData = diyalog.dugumler[diyalog.aktifDugumId];
                 if (nodeData && nodeData.secenekler && nodeData.secenekler.length > 0) {
                     const secilen = nodeData.secenekler[diyalog.seciliIndex];
@@ -1013,19 +1132,27 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
                     }
 
                     if (secilen && secilen.hedef) {
-                        // Yeni düğüme geç (varsa)
+                        // Hardcoded ağaçta başka düğüm varsa geç
                         npcDiyalogRef.current = {
                             ...diyalog,
                             aktifDugumId: secilen.hedef,
                             seciliIndex: 0
                         };
                     } else {
-                        // Hedef yoksa veya sonuncuysa kapat
-                        npcDiyalogRef.current = null;
+                        // AI konuşması — seçilen yanıta göre NPC'den yeni cevap al
+                        const mevcutNpcMesaj = nodeData.mesaj;
+                        const diyalogNpc = npclerRef.current.find(n => n.id === diyalog.npcId);
+                        if (diyalogNpc) {
+                            diyalog.tur = (diyalog.tur || 1) + 1;
+                            devamMesajCek(diyalogNpc, secilen.metin, mevcutNpcMesaj, diyalog.tur);
+                        }
                     }
                 } else {
-                    // Seçenek yoksa direkt kapat
+                    // Seçenek yok = konuşma bitti, kapat
+                    delete aiMesajRef.current[diyalog.npcId];
+                    delete aiMesajRef.current[diyalog.npcId + '_loading'];
                     npcDiyalogRef.current = null;
+                    onNpcKonustu?.();
                 }
                 return;
             }
@@ -1036,13 +1163,14 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
                 aiMesajCek(yakinNpcRef.current);
             }
             if (yakinNpc) {
-                const aiMesaj = aiMesajRef.current[yakinNpc.id];
+                const aiVeri = aiMesajRef.current[yakinNpc.id];
                 const dugumler = { ...yakinNpc.diyalogAgaci };
 
-                if (aiMesaj) {
+                if (aiVeri) {
                     dugumler['giris'] = {
                         ...dugumler['giris'],
-                        mesaj: aiMesaj
+                        mesaj: aiVeri.mesaj,
+                        ...(aiVeri.secenekler.length > 0 && { secenekler: aiVeri.secenekler })
                     };
                 }
 
@@ -1106,6 +1234,9 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
                 npclerRef.current = cfg
                     ? Array.from({ length: cfg.sayı }, () => npcOlustur(oda, dinamikTile))
                     : [];
+                if (cfg?.gorevli) {
+                    npclerRef.current.push(kantinGorevlisiOlustur(oda, dinamikTile));
+                }
                 npclerRef.current._odaId = odaId;
             }
 
@@ -1200,6 +1331,16 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
                 const diyalogNpc = npclerRef.current.find(n => n.id === diyalogData.npcId);
 
                 if (diyalogNpc) {
+                    // Diyalog açıkken AI mesajı yüklenirse girişi canlı güncelle
+                    // Diyalog açıkken AI verisi yüklenirse giris düğümünü canlı güncelle
+                    const aiVeri = aiMesajRef.current[diyalogData.npcId];
+                    if (aiVeri && diyalogData.dugumler['giris'] && diyalogData.dugumler['giris'].mesaj !== aiVeri.mesaj) {
+                        diyalogData.dugumler['giris'] = {
+                            ...diyalogData.dugumler['giris'],
+                            mesaj: aiVeri.mesaj,
+                            ...(aiVeri.secenekler.length > 0 && { secenekler: aiVeri.secenekler })
+                        };
+                    }
                     const aktifDugum = diyalogData.dugumler[diyalogData.aktifDugumId];
                     if (aktifDugum) {
                         konusmaBalonuCiz(
@@ -1209,7 +1350,8 @@ function OdaCanvas({ odaId = 'yurtOdasi', setOdaId, aktiviteYap, ekleEtki, aktif
                             dinamikTile,
                             diyalogData.isim,
                             aktifDugum,
-                            diyalogData.seciliIndex
+                            diyalogData.seciliIndex,
+                            npcDiyalogYukleniyor.current
                         );
                     }
                 }

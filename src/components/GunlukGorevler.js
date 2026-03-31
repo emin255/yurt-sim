@@ -76,6 +76,14 @@ function GunlukGorevler({ gorevler }) {
                                 <div style={{ fontSize: '11px', color: '#666', marginTop: '2px' }}>
                                     {gorev.aciklama}
                                 </div>
+                                {/* İlerleme göstergesi */}
+                                {!gorev.tamamlandi && (gorev.ilerleme || 0) > 0 && (
+                                    <div style={{ fontSize: '10px', color: '#f0c040', marginTop: '3px' }}>
+                                        {gorev.tip === 'stat_artir'
+                                            ? `+${gorev.ilerleme}/${gorev.miktar}`
+                                            : `${gorev.ilerleme}/${gorev.hedef}`}
+                                    </div>
+                                )}
                             </div>
                         </div>
 

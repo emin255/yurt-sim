@@ -598,6 +598,146 @@ function HafizaOyunu({ onBitis }) {
 }
 
 // ============================================================
+// DERS ÇALIŞMA — Soru Cevap Oyunu
+// ============================================================
+function DersCalismaOyunu({ onBitis }) {
+    const [sorular, setSorular] = useState([]);
+    const [ders, setDers] = useState('');
+    const [yukleniyor, setYukleniyor] = useState(true);
+    const [hata, setHata] = useState(null);
+    const [siradaki, setSiradaki] = useState(0);
+    const [dogruSayisi, setDogruSayisi] = useState(0);
+    const [secim, setSecim] = useState(null);
+    const [sonuc, setSonuc] = useState(null);
+    const [sure, setSure] = useState(40);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/api/ders-sorular', { method: 'POST' })
+            .then(r => r.json())
+            .then(data => {
+                if (data.error) throw new Error(data.error);
+                const islenmisSorular = data.sorular.map(s => {
+                    const dogru = s.secenekler[0];
+                    const karisik = [...s.secenekler].sort(() => Math.random() - 0.5);
+                    return { soru: s.soru, secenekler: karisik, dogru: karisik.indexOf(dogru) };
+                });
+                setSorular(islenmisSorular);
+                setDers(data.ders || '');
+                setYukleniyor(false);
+            })
+            .catch(e => {
+                setHata(e.message);
+                setYukleniyor(false);
+            });
+    }, []);
+
+    useEffect(() => {
+        if (yukleniyor || sonuc || secim !== null || sorular.length === 0) return;
+        const t = setInterval(() => setSure(s => {
+            if (s <= 1) {
+                setSonuc(dogruSayisi >= 2 ? 'basarili' : 'basarisiz');
+                return 0;
+            }
+            return s - 1;
+        }), 1000);
+        return () => clearInterval(t);
+    }, [yukleniyor, sonuc, secim, dogruSayisi, sorular.length]);
+
+    const cevapla = (index) => {
+        if (secim !== null || sonuc) return;
+        setSecim(index);
+        const dogru = index === sorular[siradaki].dogru;
+        const yeniDogru = dogruSayisi + (dogru ? 1 : 0);
+        setTimeout(() => {
+            setSecim(null);
+            setSure(40);
+            const yeniSira = siradaki + 1;
+            if (yeniSira >= sorular.length) {
+                setSonuc(yeniDogru >= 2 ? 'basarili' : 'basarisiz');
+                setDogruSayisi(yeniDogru);
+            } else {
+                setSiradaki(yeniSira);
+                setDogruSayisi(yeniDogru);
+            }
+        }, 900);
+    };
+
+    if (yukleniyor) return (
+        <div style={{ textAlign: 'center', padding: 40, color: '#aaa', fontSize: 12 }}>
+            <div style={{ fontSize: 32, marginBottom: 12 }}>📖</div>
+            Sorular hazırlanıyor...
+        </div>
+    );
+
+    if (hata) return (
+        <div style={{ textAlign: 'center', padding: 20 }}>
+            <p style={{ color: '#ff5555', fontSize: 12, marginBottom: 16 }}>Sorular yüklenemedi: {hata}</p>
+            <button onClick={() => onBitis(false)} style={{
+                background: '#333', border: 'none', color: '#fff',
+                padding: '10px 20px', borderRadius: 8, cursor: 'pointer', fontSize: 12
+            }}>Kapat</button>
+        </div>
+    );
+
+    const soru = sorular[siradaki];
+
+    return (
+        <div style={{ textAlign: 'center' }}>
+            {!sonuc && (
+                <>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                        <span style={{ color: '#aaa', fontSize: 10 }}>Soru {siradaki + 1}/{sorular.length}</span>
+                        <span style={{ color: '#f0c040', fontSize: 10 }}>{ders}</span>
+                        <span style={{ color: sure <= 10 ? '#ff5555' : '#aaa', fontSize: 10 }}>⏱ {sure}s</span>
+                    </div>
+                    <div style={{
+                        background: 'rgba(240,192,64,0.06)', border: '1px solid rgba(240,192,64,0.2)',
+                        borderRadius: 12, padding: '16px 20px', marginBottom: 16, fontSize: 13, color: '#ddd', lineHeight: 1.8, textAlign: 'left'
+                    }}>
+                        {soru.soru}
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                        {soru.secenekler.map((s, i) => {
+                            let bg = 'rgba(255,255,255,0.05)';
+                            let border = 'rgba(255,255,255,0.1)';
+                            if (secim !== null) {
+                                if (i === soru.dogru) { bg = 'rgba(80,200,120,0.18)'; border = '#50c878'; }
+                                else if (i === secim) { bg = 'rgba(255,85,85,0.18)'; border = '#ff5555'; }
+                            }
+                            return (
+                                <button key={i} onClick={() => cevapla(i)} style={{
+                                    padding: '12px 10px', borderRadius: 10, fontSize: 12,
+                                    background: bg, border: `1px solid ${border}`,
+                                    color: '#fff', cursor: secim !== null ? 'default' : 'pointer',
+                                    transition: 'all 0.2s', textAlign: 'left'
+                                }}>
+                                    <span style={{ color: '#f0c040', marginRight: 6 }}>{['A', 'B', 'C', 'D'][i]})</span>{s}
+                                </button>
+                            );
+                        })}
+                    </div>
+                    <div style={{ marginTop: 12, color: '#50c878', fontSize: 11 }}>✓ {dogruSayisi} doğru</div>
+                </>
+            )}
+            {sonuc && (
+                <div style={{ marginTop: 16 }}>
+                    <p style={{ fontSize: 28, marginBottom: 8 }}>{sonuc === 'basarili' ? '📚' : '😴'}</p>
+                    <p style={{ color: sonuc === 'basarili' ? '#50c878' : '#ff5555', fontSize: 14, fontWeight: 'bold', marginBottom: 6 }}>
+                        {sonuc === 'basarili' ? 'Harika! Konuya hakimsin!' : 'Konsantre olamadın...'}
+                    </p>
+                    <p style={{ color: '#aaa', fontSize: 11, marginBottom: 4 }}>{ders}</p>
+                    <p style={{ color: '#aaa', fontSize: 11, marginBottom: 16 }}>{dogruSayisi}/{sorular.length} doğru</p>
+                    <button onClick={() => onBitis(sonuc === 'basarili')} style={{
+                        background: '#f0c040', border: 'none', color: '#111',
+                        padding: '10px 24px', borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 'bold'
+                    }}>Devam</button>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// ============================================================
 // TEMİZLİK / TAMİR — Tıklama Oyunu
 // ============================================================
 function TemizlikOyunu({ onBitis }) {
@@ -689,22 +829,27 @@ function TemizlikOyunu({ onBitis }) {
 // ANA MODAL
 // ============================================================
 const OYUN_TIPLERI = {
-    is:       { baslik: '💼 CV Hazırlama',    renk: '#4da6ff', oyun: CVHazırlama,   basari: { akademik: 15, para: 200 }, basarisiz: { enerji: -15 } },
-    parti:    { baslik: '🎉 Parti & Dans',    renk: '#b57bee', oyun: DansRitim,     basari: { sosyal: 25, enerji: 10 },  basarisiz: { enerji: -10 } },
-    parttime: { baslik: "🍽️ Garsonluk",       renk: '#ff8c42', oyun: GarsonlukOyunu,basari: { para: 200, enerji: -15 }, basarisiz: { enerji: -20 } },
-    arkadas:  { baslik: '💬 İletişim',        renk: '#50c878', oyun: DiyalogOyunu,  basari: { sosyal: 30, enerji: -5 }, basarisiz: { sosyal: -10, enerji: -10 } },
-    kodlama:  { baslik: '💻 Kodlama',         renk: '#4da6ff', oyun: KodlamaOyunu,  basari: { akademik: 30, enerji: -15 }, basarisiz: { akademik: -10, enerji: -25 } },
-    hafiza:   { baslik: '🧠 Odak ve Hafıza',  renk: '#b57bee', oyun: HafizaOyunu,   basari: { akademik: 25, saglik: 10 }, basarisiz: { akademik: -15, enerji: -10 } },
-    temizlik: { baslik: '🛠️ Hızlı Müdahale',  renk: '#ff5555', oyun: TemizlikOyunu, basari: { saglik: 15, sosyal: 10 }, basarisiz: { saglik: -10, enerji: -15 } },
+    is:           { baslik: '💼 CV Hazırlama',    renk: '#4da6ff', oyun: CVHazırlama,      basari: { akademik: 15, para: 200 }, basarisiz: { enerji: -15 } },
+    parti:        { baslik: '🎉 Parti & Dans',    renk: '#b57bee', oyun: DansRitim,         basari: { sosyal: 25, enerji: 10 },  basarisiz: { enerji: -10 } },
+    parttime:     { baslik: "🍽️ Garsonluk",       renk: '#ff8c42', oyun: GarsonlukOyunu,    basari: { para: 200, enerji: -15 }, basarisiz: { enerji: -20 } },
+    arkadas:      { baslik: '💬 İletişim',        renk: '#50c878', oyun: DiyalogOyunu,      basari: { sosyal: 30, enerji: -5 }, basarisiz: { sosyal: -10, enerji: -10 } },
+    kodlama:      { baslik: '💻 Kodlama',         renk: '#4da6ff', oyun: KodlamaOyunu,      basari: { akademik: 30, enerji: -15 }, basarisiz: { akademik: -10, enerji: -25 } },
+    hafiza:       { baslik: '🧠 Odak ve Hafıza',  renk: '#b57bee', oyun: HafizaOyunu,       basari: { akademik: 25, saglik: 10 }, basarisiz: { akademik: -15, enerji: -10 } },
+    temizlik:     { baslik: '🛠️ Hızlı Müdahale',  renk: '#ff5555', oyun: TemizlikOyunu,     basari: { saglik: 15, sosyal: 10 }, basarisiz: { saglik: -10, enerji: -15 } },
+    dersCalisma:  { baslik: '📖 Ders Çalışma',    renk: '#f0c040', oyun: DersCalismaOyunu,  basari: { akademik: 15, enerji: -20, sosyal: -5 }, basarisiz: { enerji: -20 } },
 };
 
-function MiniOyun({ tip, onKapat, onStatGuncelle }) {
+function MiniOyun({ tip, onKapat, onStatGuncelle, onBitisCallback }) {
     const config = OYUN_TIPLERI[tip];
     if (!config) return null;
     const Oyun = config.oyun;
 
     const handleBitis = (basarili) => {
-        onStatGuncelle(basarili ? config.basari : config.basarisiz);
+        if (onBitisCallback) {
+            onBitisCallback(basarili);
+        } else {
+            onStatGuncelle(basarili ? config.basari : config.basarisiz);
+        }
         onKapat();
     };
 
