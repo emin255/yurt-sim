@@ -57,4 +57,4 @@ Projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları izleye
 Eğer oyunu geliştirmek, yeni özellikler veya bölümler eklemek isterseniz PR (Pull Request) oluşturmaktan çekinmeyin!
 
 ---
-*İyi eğlenceler ve zorlu öğrencilik hayatında başarılar!* 🎓
+*İyi eğlenceler ve zorlu öğrencilik hayatında başarılar! --emin255, mardaakyuz* 🎓
